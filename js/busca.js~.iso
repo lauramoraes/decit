@@ -1,0 +1,201 @@
+function _options(opcao)
+
+{
+	switch(opcao.value)
+
+	{
+
+		case "1":       //todos
+
+			document.getElementById("operador_0").innerHTML="&nbsp;"
+
+			document.getElementById("VALORES_TITULO").innerHTML="&nbsp;"
+
+			document.all.tabela.rows[1].cells[1].innerHTML="&nbsp;"
+
+			document.all.tabela.rows[1].cells[2].innerHTML="&nbsp;"
+
+
+		break;
+
+		case "2.nome":     //nome
+
+			document.getElementById("operador_0").innerHTML="<div class=\"styleBusca2\">Operador</div>"
+
+			document.getElementById("VALORES_TITULO").innerHTML="<div class=\"styleBusca2\">Valor</div>"
+
+			document.all.tabela.rows[1].cells[2].innerHTML=eval(("\"<div align='center'> <input id='searchValue' name='valor' type='text'  size='55'></div>\""));
+
+			document.all.tabela.rows[1].cells[1].innerHTML=eval(("\"<div align='center'> <select id='operator' name='nameOperator' size='1'><option value='1'>Contém</option><option value='2'>Exatamente igual a</option><option value='3'>Começado por</option><option value='4' selected></option></select></div>\"" ));
+
+		break;
+
+		case "cidade":    //Cidade de estudo
+
+			document.getElementById("operador_0").innerHTML="<div class=\"styleBusca2\">Operador</div>"
+
+			document.getElementById("VALORES_TITULO").innerHTML="<div class=\"styleBusca2\">Valor</div>"
+
+			document.all.tabela.rows[1].cells[2].innerHTML=eval(("\"<div align='center'> <select id='searchValue2' name='valor' size='1'><option value='Curitiba/Paraná'>Curitiba/Paraná</option><option value='Fortaleza/Ceará'>Fortaleza/Ceará</option><option value='Itaboraí/RJ'>Itaboraí/RJ</option><option value='4' selected>Qual cidade?</option></select></div>\"" ));
+
+			document.all.tabela.rows[1].cells[1].innerHTML="&nbsp;"
+
+		break;
+
+
+		case "unidade":   //Tipo de unidade de saúde
+
+			document.getElementById("operador_0").innerHTML="<div class=\"styleBusca2\">Operador</div>"
+
+			document.getElementById("VALORES_TITULO").innerHTML="<div class=\"styleBusca2\">Valor</div>"
+
+			document.all.tabela.rows[1].cells[2].innerHTML=eval(("\"<div align='center'> <select id='searchValue3' name='valor' size='1'><option value='1'>Programa Saúde Família</option><option value='2'>Unidade Básica de Saúde</option><option value='3'>Unid Pronto Atendimento/Urgência/Emergência</option><option value='4'>Unidade Hospitalar</option><option value='5'>Outros</option><option value='6' selected>Qual unidade?</option></select></div>\"" ));
+
+		    document.all.tabela.rows[1].cells[1].innerHTML="&nbsp;"
+
+		break;
+
+
+		case "tipo":    //Tipo de participante
+
+			document.getElementById("operador_0").innerHTML="<div class=\"styleBusca2\">Operador</div>"
+
+			document.getElementById("VALORES_TITULO").innerHTML="<div class=\"styleBusca2\">Valor</div>"
+
+			document.all.tabela.rows[1].cells[2].innerHTML=eval(("\"<div align='center'> <select id='searchValue4' name='valor' size='1'><option value='1'>Contato</option><option value='2'>Sintomático Respiratório</option><option value='3'>Unid Pronto Atendimento/Urgência/Emergência</option><option value='4'>Caso Suspeito de Tuberculose</option><option value='5'>Outros</option><option value='6' selected>Qual tipo?</option></select></div>\"" ));
+
+			document.all.tabela.rows[1].cells[1].innerHTML="&nbsp;"
+
+		break;
+
+		case "numfns":  //No do CAT-SUS
+
+			document.getElementById("operador_0").innerHTML="<div class=\"styleBusca2\">Operador</div>"
+
+			document.getElementById("VALORES_TITULO").innerHTML="<div class=\"styleBusca2\">Valor</div>"
+
+			document.all.tabela.rows[1].cells[2].innerHTML=eval(("\"<div align='center'> <input id='searchValue5' name='valor' type='text'  size='10' maxlength='11'></div>\""));
+
+            document.all.tabela.rows[1].cells[1].innerHTML="&nbsp;"
+
+		break;
+
+		case "profsaude":    //psaude
+
+			document.getElementById("operador_0").innerHTML="<div class=\"styleBusca2\">Operador</div>"
+
+			document.getElementById("VALORES_TITULO").innerHTML="<div class=\"styleBusca2\">Valor</div>"
+
+			document.all.tabela.rows[1].cells[2].innerHTML=eval("\"<div align='center'> <font face='arial' size='2'><input id='searchValue6'  name='valor' value='sim' type='radio'> Sim <input id='searchValue66' name='psaude' value='nao' type='radio'> Não </font></div>\"");
+
+			document.all.tabela.rows[1].cells[1].innerHTML="&nbsp;"
+
+		break;
+
+		case "sint":    //Sintomas
+
+			document.getElementById("operador_0").innerHTML="<div class=\"styleBusca2\">Operador</div>"
+
+			document.getElementById("VALORES_TITULO").innerHTML="<div class=\"styleBusca2\">Valor</div>"
+
+			document.all.tabela.rows[1].cells[2].innerHTML=eval(("\"<div align='center'> <select id='searchValue7' name='valor' size='1'><option value='1'>Tosse</option><option value='2'>Catarro/Expectoração</option><option value='3'>Sangue no catarro/Hemoptise</option><option value='4'>Dor Torácica/dor no peito</option><option value='5'>Febre</option><option value='6'>Suores à noite</option><option value='7'>Falta de apetite</option><option value='8'>Emagrecimento</option><option value='9'>Cansaço</option><option value='10'>Rouquidão</option><option value='11'>Ínguas</option><option value='12'>Falta de ar (Dispnéia)</option><option value='13'>Chiado no peito</option><option value='14'>Assintomático</option><option value='15' selected>Qual sintoma?</option></select></div>\"" ));
+
+			document.all.tabela.rows[1].cells[1].innerHTML="&nbsp;"
+
+		break;
+
+		case "9":  //Prob. de TB pela enfermeira
+
+			document.getElementById("operador_0").innerHTML="<div class=\"styleBusca2\">Operador</div>"
+
+			document.getElementById("VALORES_TITULO").innerHTML="<div class=\"styleBusca2\">Valor</div>"
+
+			document.all.tabela.rows[1].cells[2].innerHTML=eval(("\"<div align='center'> <select id='searchValue8' name='prob' size='1'><option value='1'>Alta</option><option value='2'>Média</option><option value='3'>Baixa</option><option value='4'>Não sei</option><option value='5' selected>Qual?</option></select></div>\"" ));
+
+			document.all.tabela.rows[1].cells[1].innerHTML="&nbsp;"
+
+		break;
+
+		default:
+
+		break;
+
+	}
+
+}
+
+function validarBusca(form)
+{
+ 	switch(form.select.selectedIndex)
+	{
+		case 0:
+		break;
+		case 1:
+		    if(document.getElementById('operator').value == 4)
+	        {
+                alert("Selecione um Operador");
+		        return(false);
+	        }
+			if(document.getElementById('searchValue').value == "")
+			{
+				alert("Preencha o campo valor");
+				return(false);
+			}
+		break;
+		case 2:
+            if(document.getElementById('searchValue2').value == 4)
+	        {
+		        alert("Selecione uma Cidade");
+                return(false);
+	        }
+		break;
+		case 3:
+            if(document.getElementById('searchValue3').value == 6)
+	        {
+		        alert("Selecione uma unidade");
+                return(false);
+	        }
+		break;
+		case 4:
+             if(document.getElementById('searchValue4').value == 6)
+	        {
+		        alert("Selecione um tipo");
+                return(false);
+	        }
+		break;
+		case 5:
+		    	if(document.getElementById('searchValue5').value == "")
+			{
+				alert("Preencha o campo valor");
+				return(false);
+			}
+		break;
+		case 6:
+            if(document.getElementById('searchValue6').checked == false && document.getElementById('searchValue66').checked == false)
+			{
+				alert("Selecione sim ou não");
+				return(false);
+			}
+		break;
+		case 7:
+              if(document.getElementById('searchValue7').value == 15)
+	        {
+		        alert("Selecione um sintoma");
+                return(false);
+	        }
+		break;
+		case 8:
+               if(document.getElementById('searchValue8').value == 5)
+	        {
+		        alert("Selecione um valor");
+                return(false);
+	        }
+		break;
+
+		default:
+
+		break;
+	}
+	return(true);
+}
+

@@ -1,0 +1,48 @@
+/* CSS Document */
+/* formulario.css */
+
+table
+{
+ border:none;
+ font:Arial, Helvetica, sans-serif;
+ font-size:15px;
+/*  font color:#000000; */
+ width:18em;
+ table-layout: fixed;
+border-collapse: collapse;
+}
+
+tr.impar
+{
+ background-color:#8888BB;
+}
+
+tr.par
+{
+ background-color:#CCCCFF;
+ cellspacing: 0;
+}
+
+tr.label
+{
+ background-color:#DDDDDD;
+; font-weight: bolder
+}
+
+td.campo
+{
+  width:700;
+  margin-left:50;
+}
+/*  */
+td.espaco
+{
+  padding: 5px;
+  width:4em;
+ cellspacing: 0;
+}
+
+body
+{
+ background-color:#FFFFFF;
+}

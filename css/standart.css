@@ -1,0 +1,92 @@
+ /*  Arquivo para o projeto NeuralTB
+     Universidade Federal do Rio de Janeiro
+     Escola Politecnica
+     Departamento de Engenharia Eletronica e de Computacao
+	
+     Laboratorio de Processamento de Sinais
+	
+     Autor: Luiz Evora
+     Atualizacao: Laura de Oliveira Fernandes Moraes
+     Ultima atualizacao: 21/07/2008 */
+
+
+.style1 {
+background-color:white ;
+}
+
+.style2 {
+font-family : arial ;
+font-weight : bold ;
+}
+
+.style3 {
+font-weight : bold ;
+}
+
+.fontRight {
+text-align : right ;
+}
+
+.header {
+background-color : #F5DEB3 ;
+}
+
+.item {
+background-color : #CCCCCC ;
+}
+
+.fundoTabela {
+background-color : #EEEEEE ;
+}
+
+.fontLeft {
+text-align : left ;
+}
+
+.nome {
+background-color:#F5DEB3 ;
+}
+
+.forms {
+background-color:#FDF5E6 ;
+text-align: center;
+}
+
+.par {
+background-color:#FFFAFA ;
+/*background-color:#000000 ;*/
+}
+
+.impar {
+background-color:#D7EFFF ;
+}
+
+.styleBusca1 {
+background-color:#F5DEB3 ;
+}
+
+.styleBusca2 {
+font-family : Arial, Helvetica, sans-serif ;
+font-weight : bold ;
+font-size: 17;
+color :#000000;
+}
+
+span.informacao {
+color: #800000;
+text-decoration: underline;
+font-size:0.9em;
+}
+
+.link
+{
+	color:blue;
+	text-decoration: underline;
+	cursor: pointer;	
+}
+
+A:link {color: black}
+A:active {color: black}
+A:visited {color: black;}
+A:hover {color: black;}
+

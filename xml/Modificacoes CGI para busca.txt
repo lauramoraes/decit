@@ -1,0 +1,7 @@
+- Ordem dentro de <link> importa para o estilo da apresentação (certo)
+- Tag <form> impede que o FF exiba o resultado (certo)
+
+
+MELHORIAS PARA ANÁLISE:
+ -> Mostrar a porcentagem da variável (certo)
+ -> Escolher variáveis mais interessantes 

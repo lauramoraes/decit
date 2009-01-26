@@ -1,0 +1,9 @@
+/* CSS Document */
+/* index.css */
+
+p.intro
+{
+ text-decoration: underline;
+ color: #0000FF;
+ cursor: pointer;
+}

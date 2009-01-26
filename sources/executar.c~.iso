@@ -1,0 +1,506 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <string.h>
+#include <errno.h>
+#include <math.h>
+#include <time.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+
+#define OK 0
+
+typedef struct chain
+{
+	char *attribute;
+	char *value;
+	struct chain *next;
+} chainType;
+
+int criaTodosPacientes()
+{
+    FILE *origem,*destino;
+    char linha[10240];
+
+    origem=fopen("../arquivos_lhevora/xml/pacientes.xml", "r");
+    destino = fopen("../arquivos_lhevora/xml/todosPac.xml", "w");
+    fgets(linha, 1024, origem);
+    fputs(linha, destino);
+    fgets(linha, 1024, origem);
+    fputs("<?xml-stylesheet type=\"text/xsl\" href=\"todosPacientes.xsl\"?>\n", destino);
+    fgets(linha, 1024, origem);
+	while(strcmp(linha, "</doc>") != 0)
+	{
+		fputs(linha, destino);
+		fgets(linha, 1024, origem);
+  	}
+  	fputs("</doc>", destino);
+  	fclose(origem);
+  	fclose(destino);
+  	
+  	return OK;
+}
+ 
+int criaTodosRecusa()
+{
+    FILE *origem,*destino;
+    char linha[10240];
+
+    origem=fopen("../xml/recusa.xml", "r");
+    destino = fopen("../xml/todosRec.xml", "w");
+    fgets(linha, 1024, origem);
+    fputs(linha, destino);
+    fgets(linha, 1024, origem);
+    fputs("<?xml-stylesheet type=\"text/xsl\" href=\"todosRecusa.xsl\"?>\n", destino);
+    fgets(linha, 1024, origem);
+	while(strcmp(linha, "</doc>") != 0)
+	{
+		fputs(linha, destino);
+		fgets(linha, 1024, origem);
+  	}
+  	fputs("</doc>", destino);
+  	fclose(origem);
+  	fclose(destino);
+  	
+  	return OK;
+}
+
+int main (void)
+{
+	FILE *xml,*xml_tmp,*arqNum;
+	unsigned x,y = 0;
+    unsigned aceitou = 0;
+    unsigned curitiba = 0;
+    unsigned long numInt;
+	double contentLength;
+	char* temp1;
+	char* temp2;
+	const char *length;
+    char originalString[10240];
+	char processedString[10240];
+    char temp[10240];
+    char hexa[3],num[11];
+	chainType *form, *aux, *first;
+
+    //se ponteiro devolvido eh nulo...
+    if(!(length= getenv("CONTENT_LENGTH")))
+    {
+
+		printf("Content-type: text/html\n\n");
+		printf("<html>\n");
+		printf("<head>\n");
+		printf("<title>Resultado</title>\n");
+		printf("</head>\n");
+		printf("<body>\n");
+		printf("erro ao repassar os argumentos");
+		printf("</body>\n");
+		printf("</html>\n");
+		exit(OK);
+	}
+
+	//converte string com o tamanho em long int
+	contentLength=strtol(length, NULL, 10);
+    //le linha das informacoes 1 vez com o tamanho de contentLength do stdin e armazena em originalString
+    fread(originalString, contentLength, 1, stdin);
+
+    //le char por char da url substituindo os carac especiais
+	for (x = 0, y = 0; x < strlen(originalString); x++, y++)
+	{
+		switch (originalString[x])
+		{
+			/* Convert all + chars to space chars */
+			case '+':
+				processedString[y] = ' ';
+				break;
+
+			/* Convert all %xy hex codes into ASCII chars */
+	 	    case '%':
+				/* Copy the two bytes following the % */
+				strncpy(hexa, &originalString[x + 1], 2);
+				/* Skip over the hex */
+				x = x + 2;
+				/* Convert the hex to ASCII */
+				/* Prevent user from altering URL delimiter sequence */
+				if( ((strcmp(hexa,"26")==0)) || ((strcmp(hexa,"3D")==0)) )
+				{
+					processedString[y]='%';
+					y++;
+					strcpy(processedString,hexa);
+					y+=2;
+					break;
+				}
+				processedString[y] = (char)strtol(hexa, NULL, 16);
+				break;
+
+			/* Make an exact copy of anything else */
+			 default:
+				processedString[y] = originalString[x];
+				break;
+		}
+	}
+
+	temp1 = (char *)&processedString;
+	aux=NULL;
+
+	for (temp2=strsep(&temp1,"&"); temp2!=NULL; temp2=strsep(&temp1,"&"))
+	{
+		form = (chainType *)malloc(sizeof(chainType));
+		form->attribute=strsep(&temp2,"=");
+		form->value=strsep(&temp2,"\0");
+
+        if(strcmp(form->attribute,"situacao")==OK) {
+            if(strcmp(form->value,"aceitou")==OK)  aceitou=1;
+            else aceitou=2;
+        }
+        if(strcmp(form->attribute,"cidade")==OK) {
+            if(strcmp(form->value,"1")==OK)  curitiba=1;
+            else curitiba=2;
+        }
+
+		if (aux == NULL)
+			first = form;
+		else
+			aux->next = form;
+
+		aux = form;
+	}
+
+    form->next = NULL;
+	if(!form)
+	{
+		printf("Content-type: text/html\n\n");
+		printf("<html>\n");
+		printf("<head>\n");
+		printf("<title>Resultado</title>\n");
+		printf("</head>\n");
+		printf("<body>\n");
+		printf("erro");
+		printf("</body>\n");
+		exit(OK);
+	}
+
+	/////////////////////////
+	//inicio escrita do xml//
+	/////////////////////////
+    if(aceitou==1)
+    {
+    
+        if ((arqNum=fopen("../numero/number.txt", "r")) == NULL)
+	    {
+          arqNum = fopen("../numero/number.txt", "w");
+          fprintf(arqNum,"2");
+          fclose(arqNum);
+          strcpy(num,"1");
+        }
+        else
+        {
+   	      fgets(num,10,arqNum);
+          fclose(arqNum);
+       	  numInt = strtoul(num,NULL,10);
+          numInt++;
+          sprintf(temp,"%lu",numInt);
+          arqNum = fopen("../numero/number.txt", "w");
+          fprintf(arqNum,temp);
+          fclose(arqNum);
+        }
+    
+        if ((xml=fopen("../xml/pacientes.xml", "r")) == NULL)
+	    {
+		xml = fopen("../xml/pacientes.xml", "w");
+		fprintf(xml, "<?xml version=\"1.0\" encoding=\"iso-8859-1\"?>\n");
+		fprintf(xml, "<?xml-stylesheet type=\"text/xsl\" href=\"pacientes.xsl\"?>\n");
+		fprintf(xml, "<doc>\n");
+		fprintf(xml, "    <paciente>\n");
+		fprintf(xml, "      <id>%s</id>\n",num);
+        for (aux=first; aux!=NULL; aux=aux->next)
+		{
+           fprintf(xml, "      <%s>%s</%s>\n",aux->attribute,aux->value,aux->attribute);
+		}
+        fprintf(xml, "    </paciente>\n");
+		fprintf(xml, "</doc>");
+		fclose(xml);
+	    }
+        else
+	    {
+        xml_tmp = fopen("../xml/temp.xml", "w");
+		fgets(temp, 1024, xml);
+		while(strcmp(temp, "</doc>") != 0)
+		{
+			fputs(temp, xml_tmp);
+			fgets(temp, 1024, xml);
+		}
+		fprintf(xml_tmp, "    <paciente>\n");
+		fprintf(xml_tmp, "      <id>%s</id>\n",num);
+        for (aux=first; aux!=NULL; aux=aux->next)
+		{
+            fprintf(xml_tmp, "      <%s>%s</%s>\n",aux->attribute,aux->value,aux->attribute);
+        }
+        fprintf(xml_tmp, "    </paciente>\n");
+		fprintf(xml_tmp, "</doc>");
+		fclose(xml);
+		fclose(xml_tmp);
+		remove("../xml/pacientes.xml");
+        rename("../xml/temp.xml","../xml/pacientes.xml");
+	   }
+	    criaTodosPacientes(xml);
+    }
+    else//se recusou
+    {
+        if ((xml=fopen("../xml/recusa.xml", "r")) == NULL)
+	    {
+        xml = fopen("../xml/recusa.xml", "w");
+		fprintf(xml, "<?xml version=\"1.0\" encoding=\"iso-8859-1\"?>\n");
+		fprintf(xml, "<?xml-stylesheet type=\"text/xsl\" href=\"recusa.xsl\"?>\n");
+		fprintf(xml, "<doc>\n");
+		fprintf(xml, "    <paciente>\n");
+ 		for (aux=first; aux!=NULL; aux=aux->next)
+		{
+            if(strcmp(aux->attribute,"cidade") == OK)
+            {
+                if(!strcmp(aux->value,"1"))  fprintf(xml, "      <%s>Curitiba/Paraná</%s>\n",aux->attribute,aux->attribute);
+                if(!strcmp(aux->value,"2"))  fprintf(xml, "      <%s>Fortaleza/Ceará</%s>\n",aux->attribute,aux->attribute);
+                if(!strcmp(aux->value,"3"))  fprintf(xml, "      <%s>Itaboraí/RJ</%s>\n",aux->attribute,aux->attribute);
+            }
+            if( (strcmp(aux->attribute,"unidade") == OK)&&(curitiba==2) )
+            {
+               if(!strcmp(aux->value,"1"))  fprintf(xml, "      <%s>Programa Saúde Família</%s>\n",aux->attribute,aux->attribute);
+               if(!strcmp(aux->value,"2"))  fprintf(xml, "      <%s>Unidade Básica de Saúde</%s>\n",aux->attribute,aux->attribute);
+               if(!strcmp(aux->value,"3"))  fprintf(xml, "      <%s>Ambulatório - Posto de Saúde</%s>\n",aux->attribute,aux->attribute);
+               if(!strcmp(aux->value,"4"))  fprintf(xml, "      <%s>Unid Pronto Atendimento/Urgência/Emergência</%s>\n",aux->attribute,aux->attribute);
+               if(!strcmp(aux->value,"5"))  fprintf(xml, "      <%s>Unidade Hospitalar</%s>\n",aux->attribute,aux->attribute);
+               if(!strcmp(aux->value,"6"))  {
+                       fprintf(xml, "      <%s>%s</%s>\n",aux->attribute,aux->next->value,aux->attribute);
+                       aux=aux->next;
+               }
+            }
+            if( (strcmp(aux->attribute,"unidade2") == OK)&&(curitiba==1) )
+            {
+               if(!strcmp(aux->value,"1"))  fprintf(xml, "      <%s>Programa Saúde Família</%s>\n",aux->attribute,aux->attribute);
+               if(!strcmp(aux->value,"2"))  fprintf(xml, "      <%s>Unidade Básica de Saúde</%s>\n",aux->attribute,aux->attribute);
+            }
+            if( (strcmp(aux->attribute,"recusa") == OK)&&(curitiba==2) )
+            {
+               if(!strcmp(aux->value,"contato"))  fprintf(xml, "      <%s>Contato assintomático</%s>\n",aux->attribute,aux->attribute);
+               if(!strcmp(aux->value,"suspeito")) fprintf(xml, "      <%s>Suspeito</%s>\n",aux->attribute,aux->attribute);
+               if(!strcmp(aux->value,"sinresp"))  fprintf(xml, "      <%s>Sintomático Respiratório</%s>\n",aux->attribute,aux->attribute);
+            }
+            if( (strcmp(aux->attribute,"recusa2") == OK)&&(curitiba==1) )
+            {
+               if(!strcmp(aux->value,"suspeito")) fprintf(xml, "      <%s>Suspeito</%s>\n",aux->attribute,aux->attribute);
+               if(!strcmp(aux->value,"sinresp"))  fprintf(xml, "      <%s>Sintomático Respiratório</%s>\n",aux->attribute,aux->attribute);
+            }
+            if(strcmp(aux->attribute,"idade") == OK)  fprintf(xml, "      <%s>%s</%s>\n",aux->attribute,aux->value,aux->attribute);
+            if(strcmp(aux->attribute,"sexo") == OK) {
+               if(!strcmp(aux->value,"f"))  fprintf(xml, "      <%s>Feminino</%s>\n",aux->attribute,aux->attribute);
+               if(!strcmp(aux->value,"m"))  fprintf(xml, "      <%s>Masculino</%s>\n",aux->attribute,aux->attribute);
+            }
+            if(strcmp(aux->attribute,"tem") == OK) {
+               if(!strcmp(aux->value,"sim"))  fprintf(xml, "      <%s>Sim</%s>\n",aux->attribute,aux->attribute);
+               if(!strcmp(aux->value,"nao"))  fprintf(xml, "      <%s>Não</%s>\n",aux->attribute,aux->attribute);
+            }
+            if(strcmp(aux->attribute,"motivo") == OK)  fprintf(xml, "      <%s>%s</%s>\n",aux->attribute,aux->value,aux->attribute);
+     	}
+        fprintf(xml, "    </paciente>\n");
+		fprintf(xml, "</doc>");
+		fclose(xml);
+      }
+      else //xml existe
+      {
+        xml_tmp = fopen("../xml/tempr.xml", "w");
+		fgets(temp, 1024, xml);
+		while(strcmp(temp, "</doc>") != 0)
+		{
+			fputs(temp, xml_tmp);
+			fgets(temp, 1024, xml);
+		}
+        fprintf(xml_tmp, "    <paciente>\n");
+        //escrever numero tb
+		for (aux=first; aux!=NULL; aux=aux->next)
+		{
+            if(strcmp(aux->attribute,"cidade") == OK)
+            {
+                if(!strcmp(aux->value,"1"))  fprintf(xml_tmp, "      <%s>Curitiba/Paraná</%s>\n",aux->attribute,aux->attribute);
+                if(!strcmp(aux->value,"2"))  fprintf(xml_tmp, "      <%s>Fortaleza/Ceará</%s>\n",aux->attribute,aux->attribute);
+                if(!strcmp(aux->value,"3"))  fprintf(xml_tmp, "      <%s>Itaboraí/RJ</%s>\n",aux->attribute,aux->attribute);
+            }
+            if( (strcmp(aux->attribute,"unidade") == OK)&&(curitiba==2) )
+            {
+               if(!strcmp(aux->value,"1"))  fprintf(xml_tmp, "      <%s>Programa Saúde Família</%s>\n",aux->attribute,aux->attribute);
+               if(!strcmp(aux->value,"2"))  fprintf(xml_tmp, "      <%s>Unidade Básica de Saúde</%s>\n",aux->attribute,aux->attribute);
+               if(!strcmp(aux->value,"3"))  fprintf(xml_tmp, "      <%s>Ambulatório - Posto de Saúde</%s>\n",aux->attribute,aux->attribute);
+               if(!strcmp(aux->value,"4"))  fprintf(xml_tmp, "      <%s>Unid Pronto Atendimento/Urgência/Emergência</%s>\n",aux->attribute,aux->attribute);
+               if(!strcmp(aux->value,"5"))  fprintf(xml_tmp, "      <%s>Unidade Hospitalar</%s>\n",aux->attribute,aux->attribute);
+               if(!strcmp(aux->value,"6"))  {
+                       fprintf(xml_tmp, "      <%s>%s</%s>\n",aux->attribute,aux->next->value,aux->attribute);
+                       aux=aux->next;
+               }
+            }
+            if( (strcmp(aux->attribute,"unidade2") == OK)&&(curitiba==1) )
+            {
+               if(!strcmp(aux->value,"1"))  fprintf(xml_tmp, "      <%s>Programa Saúde Família</%s>\n",aux->attribute,aux->attribute);
+               if(!strcmp(aux->value,"2"))  fprintf(xml_tmp, "      <%s>Unidade Básica de Saúde</%s>\n",aux->attribute,aux->attribute);
+            }
+            if( (strcmp(aux->attribute,"recusa") == OK)&&(curitiba==2) )
+            {
+               if(!strcmp(aux->value,"contato"))  fprintf(xml_tmp, "      <%s>Contato assintomático</%s>\n",aux->attribute,aux->attribute);
+               if(!strcmp(aux->value,"suspeito")) fprintf(xml_tmp, "      <%s>Suspeito</%s>\n",aux->attribute,aux->attribute);
+               if(!strcmp(aux->value,"sinresp"))  fprintf(xml_tmp, "      <%s>Sintomático Respiratório</%s>\n",aux->attribute,aux->attribute);
+            }
+            if( (strcmp(aux->attribute,"recusa2") == OK)&&(curitiba==1) )
+            {
+               if(!strcmp(aux->value,"suspeito")) fprintf(xml_tmp, "      <%s>Suspeito</%s>\n",aux->attribute,aux->attribute);
+               if(!strcmp(aux->value,"sinresp"))  fprintf(xml_tmp, "      <%s>Sintomático Respiratório</%s>\n",aux->attribute,aux->attribute);
+            }
+            if(strcmp(aux->attribute,"idade") == OK)  fprintf(xml_tmp, "      <%s>%s</%s>\n",aux->attribute,aux->value,aux->attribute);
+            if(strcmp(aux->attribute,"sexo") == OK) {
+               if(!strcmp(aux->value,"f"))  fprintf(xml_tmp, "      <%s>Feminino</%s>\n",aux->attribute,aux->attribute);
+               if(!strcmp(aux->value,"m"))  fprintf(xml_tmp, "      <%s>Masculino</%s>\n",aux->attribute,aux->attribute);
+            }
+            if(strcmp(aux->attribute,"tem") == OK) {
+               if(!strcmp(aux->value,"sim"))  fprintf(xml_tmp, "      <%s>Sim</%s>\n",aux->attribute,aux->attribute);
+               if(!strcmp(aux->value,"nao"))  fprintf(xml_tmp, "      <%s>Não</%s>\n",aux->attribute,aux->attribute);
+            }
+            if(strcmp(aux->attribute,"motivo") == OK)  fprintf(xml_tmp, "      <%s>%s</%s>\n",aux->attribute,aux->value,aux->attribute);
+     	}
+        fprintf(xml_tmp, "    </paciente>\n");
+		fprintf(xml_tmp, "</doc>");
+        fclose(xml);
+		fclose(xml_tmp);
+		remove("../xml/recusa.xml");
+        rename("../xml/tempr.xml","../xml/recusa.xml");
+       }
+       criaTodosRecusa();
+    }
+
+    
+    //inicializa html
+    if(aceitou==1)
+    {
+         printf("Content-type: text/html\n\n");
+         printf("<html>\n");
+	     printf("<head>\n");
+	     printf("<title>Formulário adicionado</title>\n");
+	     printf("<link  rel=\"stylesheet\" type=\"text/css\" href=\"../css/standart.css\"/>\n");
+	     printf("</head>\n");
+	     printf("<body bgcolor=\"white\">\n");
+	     printf("<table height=\"120\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">\n");
+         printf("      <tr bgcolor=\"#CCCCCC\"> \n");
+	     printf("          <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td> \n");
+	     printf("          <td><b><u><font size=\"5\">Menu</font></u></b></td>\n");
+	     printf("          <td>&nbsp;</td>\n");
+         printf("      </tr>\n");
+         printf("      <tr bgcolor=\"#CCCCCC\">\n");
+         printf("          <td>&nbsp;</td>\n");
+         printf("          <td width=\"100%%\">\n");
+	     printf("            <a href=\"../formulario.html\">Adicionar Paciente</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n");
+	     printf("            <a href=\"../busca.html\">Buscar/Editar/Remover</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n");
+	     printf("            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n");
+         printf("            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n");
+         printf("            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n");
+         printf("            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n");
+         printf("            <a href=\"principal.html\">Página principal</a>\n");
+	     printf("          </td>\n");
+         printf("          <td></td> \n");
+         printf("      </tr>\n");
+         printf("<tr bgcolor=\"#CCCCCC\"> \n");
+         printf("         <td>&nbsp;</td> \n");
+         printf("         <td>\n");
+         printf("            <a href=\"../exibirPacientes.html\">Exibir questionários</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; \n");
+         printf(" 	         <a href=\"../exibirRecusa.html\">Exibir recusas</a>\n");
+         printf("         </td>  \n");
+         printf("      </tr>  \n");
+         printf(" 	</table>\n");
+         printf("   <p>&nbsp;</p>");
+	     printf("<div align=center>Paciente inserido!</div><br><br>\n");
+
+         printf("<script type=\"text/javascript\">\n");
+
+	     // Load XML
+	     printf("var xml = new ActiveXObject(\"Microsoft.XMLDOM\");\n");
+	     printf("xml.async = false;\n");
+         printf("xml.load(\"../xml/pacientes.xml\");\n");
+
+	     // Load XSL
+	     printf("var xsl = new ActiveXObject(\"Microsoft.XMLDOM\");\n");
+	     printf("xsl.async = false;\n");
+	     printf("xsl.load(\"../xml/pacientes.xsl\");\n");
+
+	     // Transform
+         printf("document.write(xml.transformNode(xsl));\n");
+	     printf("</script>\n");
+
+         printf("</body>\n");
+	     printf("</html>");
+    }
+    else
+    {    printf("Content-type: text/html\n\n");
+         printf("<html>\n");
+	     printf("<head>\n");
+	     printf("<title></title>\n");
+	     printf("<link  rel=\"stylesheet\" type=\"text/css\" href=\"../css/standart.css\"/>\n");
+	     printf("</head>\n");
+	     printf("<body bgcolor=\"white\">\n");
+	     printf("<table height=\"120\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">\n");
+         printf("      <tr bgcolor=\"#CCCCCC\"> \n");
+	     printf("          <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td> \n");
+	     printf("          <td><b><u><font size=\"5\">Menu</font></u></b></td>\n");
+	     printf("          <td>&nbsp;</td>\n");
+         printf("      </tr>\n");
+         printf("      <tr bgcolor=\"#CCCCCC\">\n");
+         printf("          <td>&nbsp;</td>\n");
+         printf("          <td width=\"100%%\">\n");
+	     printf("            <a href=\"../formulario.html\">Adicionar Paciente</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n");
+	     printf("            <a href=\"../busca.html\">Buscar/Editar/Remover</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n");
+	     printf("            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n");
+         printf("            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n");
+         printf("            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n");
+         printf("            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n");
+         printf("            <a href=\"principal.html\">Página principal</a>\n");
+	     printf("          </td>\n");
+         printf("          <td></td> \n");
+         printf("      </tr>\n");
+         printf("<tr bgcolor=\"#CCCCCC\"> \n");
+         printf("         <td>&nbsp;</td> \n");
+         printf("         <td>\n");
+         printf("            <a href=\"../exibirPacientes.html\">Exibir questionários</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; \n");
+         printf(" 	         <a href=\"../exibirRecusa.html\">Exibir recusas</a>\n");
+         printf("         </td>  \n");
+         printf("      </tr>  \n");
+         printf(" 	</table>\n");
+         printf("   <p>&nbsp;</p>");
+	     printf("<div align=center>Paciente inserido!</div><br><br>\n");
+
+         printf("<script type=\"text/javascript\">\n");
+
+	     // Load XML
+	     printf("var xml = new ActiveXObject(\"Microsoft.XMLDOM\");\n");
+	     printf("xml.async = false;\n");
+	     printf("xml.load(\"../xml/recusa.xml\");\n");
+
+	     // Load XSL
+	     printf("var xsl = new ActiveXObject(\"Microsoft.XMLDOM\");\n");
+	     printf("xsl.async = false;\n");
+	     printf("xsl.load(\"../xml/recusa.xsl\");\n");
+
+	     // Transform
+	     printf("document.write(xml.transformNode(xsl));\n");
+	     printf("</script>\n");
+
+         printf("</body>\n");
+	     printf("</html>");
+
+    }
+
+    //liberar memoria
+    for (aux=form=first; aux!=NULL; form=aux)
+	{
+		aux = form->next;
+		free (form);
+	}
+
+	exit(OK);
+}
+
+
+
+

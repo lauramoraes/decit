@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml-stylesheet type="text/xsl" href="recusa.xsl"?>
+<doc>
+    <paciente>
+      <cidade>Curitiba/Paraná</cidade>
+      <unidadeCurit>Programa Saúde Família</unidadeCurit>
+      <recusaCurit>Sintomático Respiratório</recusaCurit>
+      <idade>12</idade>
+      <sexo1>Masculino</sexo1>
+      <tem>Sim</tem>
+      <motivo>Mãe não deixou</motivo>
+    </paciente>
+    <paciente>
+      <cidade>Fortaleza/Ceará</cidade>
+      <unidade>E.R.</unidade>
+      <recusa>Sintomático Respiratório</recusa>
+      <idade>22</idade>
+      <sexo1>Feminino</sexo1>
+      <tem>Não</tem>
+      <motivo>Privacidade</motivo>
+    </paciente>
+    <paciente>
+      <cidade>Fortaleza/Ceará</cidade>
+      <unidade>Unidade Hospitalar</unidade>
+      <recusa>Suspeito</recusa>
+      <idade>10</idade>
+      <sexo1>Masculino</sexo1>
+      <tem>Sim</tem>
+      <motivo>gfgfd</motivo>
+    </paciente>
+    <paciente>
+      <idade></idade>
+      <motivo></motivo>
+    </paciente>
+    <paciente>
+      <cidade>Curitiba/ParanÃ¡</cidade>
+      <unidadeCurit>Programa SaÃºde FamÃ­lia</unidadeCurit>
+      <idade></idade>
+      <motivo></motivo>
+    </paciente>
+</doc>

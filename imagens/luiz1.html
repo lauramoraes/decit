@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>
+        2.	Avaliação Inicial/Clínica do Contato/Sintomático Respiratório/Suspeito (a depender da questão)
+        </title>
+        <link  rel="stylesheet" type="text/css" href="css/standart.css"/>
+        <script language="javascript" src="js/validacoes.js"></script>
+	</head>
+    <body class="style1" onLoad="inicializaOcultosA('tabelaRecusa')">
+      <form name="form" action="CGI-BIN/executar0.cgi" method="post" onsubmit="return enviarRecusa()">
+
+            <div align="center">
+            <table cellpadding=3 border=1 cellspacing=0.1>
+                   <tr>
+                       <td><img src="imagens/cnpq.jpg"></td>
+                       <td class="style3">CNPq - Conselho Nacional de Desenvolvimento Científico<br>
+                           Projeto CNPq Decit - Edital Doenças Negligenciadas - Área Diagnóstica<br>
+                           Centros de Estudo: Itaboraí, Fortaleza, Curitiba
+                       </td>
+                   </tr>
+            </table>
+            </div>
+            <br>
+            <div align="center" class="style2">
+                TUBERCULOSE INFECÇÃO E DOENÇA ENTRE SINTOMÁTICOS RESPIRATÓRIOS,<br>
+                CONTATOS INTRA-DOMICILIARES E VALIDAÇÃO / CUSTO-EFETIVIDADE DE<br>
+                DIFERENTES TÉCNICAS DIAGNÓSTICAS EM DIFERENTES CENÁRIOS CLÍNICO-<br>
+                EPIDEMIOLÓGICOS
+            </div>
+            <br>
+            <div align="center">
+            <table cellpadding=10  cellspacing=0.1 border=1 id="tabelaRecusa">
+                   <tr>
+                       <td>Cidade de Estudo</td>
+                       <td class="fontRight">Curitiba / Paraná <input type="radio" name="cidade" value="1"><br>
+                                             Fortaleza/Ceará <input type="radio" name="cidade" value="2"><br>
+                                             Itaboraí/RJ <input type="radio" name="cidade" value="3">
+                       </td>
+                   </tr>
+                   <tr>
+                       <td>Tipo de Unidade de Saúde</td>
+                       <td class="fontRight">Programa Saúde Família <input type="radio" name="unidade" value="1" onclick="ocultaLinha('tabelaRecusa',2);TIPOUT.value='';"><br>
+                                             Unidade Básica de Saúde <input type="radio" name="unidade" value="2" onclick="ocultaLinha('tabelaRecusa',2);TIPOUT.value='';"><br>
+                                             Unid Pronto Atendimento/Urgência/Emergência <input type="radio" name="unidade" value="3" onclick="ocultaLinha('tabelaRecusa',2);TIPOUT.value='';"><br>
+                                             Unidade Hospitalar <input type="radio" name="unidade" value="4" onclick="ocultaLinha('tabelaRecusa',2);TIPOUT.value='';"><br>
+                                             Outro <input type="radio" name="unidade" value="5" onclick="exibeLinhaOculta('tabelaRecusa',2);">
+                       </td>
+                   </tr>
+                   <tr>
+                       <td></td>
+                       <td class="fontRight">
+                           Especificar:  <input type="text" name="TIPOUT" maxlength=20><br>
+                       </td>
+                   </tr>
+                   <tr>
+                       <td>Situação quanto ao questionáro</td>
+                       <td class="fontRight">Paciente aceitou <input type="radio" name="situacao" value="aceitou" onclick="ocultaLinha('tabelaRecusa',4);ocultaLinha('tabelaRecusa',5);"><br>
+                                             Paciente recusou <input type="radio" name="situacao" value="recusou" onclick="exibeLinhaOculta('tabelaRecusa',4);exibeLinhaOculta('tabelaRecusa',5);"><br>
+                       </td>
+                   </tr>
+                   <tr>
+                       <td align=left valign=top>Recusa</td>
+                       <td class="fontRight">
+                           Contato<input type="radio" name="recusa" value="contato"><br>
+                           Suspeito<input type="radio" name="recusa" value="suspeito"><br>
+                           Sintomático Respiratório<input type="radio" name="recusa" value="sinresp">
+                       </td>
+                   </tr>
+                   <tr>
+                       <td align=left valign=top>Dados sócio-demográficos</td>
+                       <td class="fontRight">
+                           Idade: <input type="text" name="idade" value="" size=2 maxlength=3 onBlur="if(this.value != '') {validarIdade(this)}"> anos<br>
+                           Sexo: M <input type="radio" name="sexo" value="m">
+                                 F <input type="radio" name="sexo" value="f"><br>
+                           Tem febre ou emagrecimento? S <input type="radio" name="tem" value="sim">
+                                                       N <input type="radio" name="tem" value="nao"><br>
+                           Poderia dizer o motivo da recusa? <input type="text" name="motivo" size=30><br>
+                       </td>
+                   </tr>
+            </table>
+            <br><br>
+              <input type="reset" value="limpar">
+              <input type="submit" value="enviar"">
+            </div>
+     </form>
+  </body>
+</html>
+
