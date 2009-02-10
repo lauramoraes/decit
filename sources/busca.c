@@ -163,9 +163,9 @@ printf("                <td width=\"20%%%%\" id=\"operador_0\">&nbsp;</td>\n");
 printf("                <td id=\"VALORES_TITULO\" width=\"40%%%%\">\n");
 printf("                    <div class=\"styleBusca2\">&nbsp;</div>\n");
 printf("                </td>\n");
-printf("                <td id=\"ORDENA_TITULO\" width=\"10%%%%\" title=\"Ordena os pacientes buscados de acordo com o atributo selecionado\">\n");
+/*printf("                <td id=\"ORDENA_TITULO\" width=\"10%%%%\" title=\"Ordena os pacientes buscados de acordo com o atributo selecionado\">\n");
 printf("                    <div class=\"styleBusca2\">&nbsp;Ordenar por</div>\n");
-printf("                </td>\n");
+printf("                </td>\n");*/
 printf("             </tr>\n");
 printf("             <tr class=\"fundoTabela\">\n");
 printf("                <td title=\"Atributo através do qual será realizada a busca\">\n");
@@ -173,33 +173,24 @@ printf("                    <div align=\"center\"><strong><font color=\"#003399\
 printf("                    <!-- select da celula [1][0] -->\n");
 printf("                    <select name=\"select\" onChange=\"_options(this);\" onKeyUp=\"_options(this.form);\">\n");
 printf("                    <option value=\"1\" selected>&nbsp;Selecione</option>\n");
-printf("                    <option value=\"2.nome\">Nome</option>\n");
-printf("                    <option value=\"3.cidade\">Cidade de estudo</option>\n");
-printf("                    <option value=\"4.numfns\">N&ordm; do CAT-SUS</option>\n");
-printf("                    <option value=\"5.profsaude\">Profissional de sa&uacute;de</option>\n");
-printf("                    <option value=\"6.tosse\">Tosse</option>\n");
-printf(" 	                <option value=\"7.catarr\">Catarro/Expectora&ccedil;&atilde;o</option>\n");
-printf("                    <option value=\"8.hempti\">Hemoptise</option>\n");
-printf("                    <option value=\"9.sudore\">Sudorese noturna</option>\n");
+printf("                    <option value=\"2.nome\">Nome</option>\n"); //Opcao 2 para nomes
+printf("                    <option value=\"3.diaNasc\">Data de nascimento</option>\n"); //Opcao 3 para datas
+printf("                    <option value=\"4.cidade\">Cidade de estudo</option>\n"); //Opcao 4 para escolhas restritas (com opcoes)
+printf("                    <option value=\"3.diaEntr\">Data da entrevista</option>\n"); //Opcao 3 para datas
 printf("                    </select>\n");
 printf("                    </font></strong></div>\n");
 printf("                </td>\n");
 printf("                <td id=\"operadores\">&nbsp;</td>\n");
 printf("                <td id=\"valores\">&nbsp;</td>\n");
-printf("		 		<td id=\"ordena\" title=\"Ordena os pacientes buscados de acordo com o atributo selecionado\">\n");
+/*printf("		 		<td id=\"ordena\" title=\"Ordena os pacientes buscados de acordo com o atributo selecionado\">\n");
 printf("                    <!-- select da celula [1][3] -->\n");
 printf("                     <select name=\"selectOrdena\">\n");
 printf("                    <option value=\"id\" selected>N&ordm; de identifica&ccedil;&atilde;o</option>\n");
 printf("                    <option value=\"nome\">Nome</option>\n");
+printf("					<option value=\"diaNasc\">Data de Nascimento</option>\n");
 printf("					<option value=\"cidade\">Cidade de estudo</option>\n");
-printf("					<option value=\"numfns\">N&ordm; do CAT-SUS</option>\n");
-printf("					<option value=\"profsaude\">Profissional de sa&uacute;de</option>\n");
-printf("					<option value=\"tosse\">Tosse</option>\n");
-printf("					<option value=\"catarr\">Catarro/Expectora&ccedil;&atilde;o</option>\n");
-printf("					<option value=\"hempti\">Hemoptise</option>\n");
-printf("					<option value=\"sudore\">Sudorese noturna</option>\n");
 printf("                    </select>\n");
-printf("                </td> \n");
+printf("                </td> \n");*/
 printf("             </tr>\n");
 printf("          </table>\n");
 printf("<p align=center> <input type=\"submit\" name=\"Submit\" value=\"Pesquisar\"> </p>\n");

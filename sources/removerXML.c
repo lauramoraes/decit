@@ -52,7 +52,7 @@ int main (void)
 	double contentLength;
 	char* temp1;
 	char* temp2;
-	int naoAchado=0;
+//	int naoAchado=0;
 //	char temp[1024];
 	char originalString[10240];
 	char processedString[10240];
@@ -61,6 +61,7 @@ int main (void)
 	chainType *form, *aux, *first;
 	char *uid;
 	long long unsigned int i=1;
+	xmlChar* version= "1.0";
 	
 //	char *paciente;
 	xmlDoc *doc = NULL;
@@ -69,11 +70,11 @@ int main (void)
 	xmlNode *root_element_new = NULL;
 	xmlNode *currently;
 	xmlNode *patientFound;
-	xmlNode *info;
-	xmlNode *removed;
+//	xmlNode *info;
+	//xmlNode *removed;
 	xmlNode *extracted;
 
-	char hour[3],minute[3],second[3],day[3],month[3],year[5];
+//	char hour[3],minute[3],second[3],day[3],month[3],year[5];
 
 	if(!(length= getenv("CONTENT_LENGTH"))) //verifica se string lida é null
 	{
@@ -268,7 +269,7 @@ int main (void)
 	test = fopen(XML_REMOVED,"r");
 	if(test == NULL)
 	{
-		docNew = xmlNewDoc("1.0");
+		docNew = xmlNewDoc(version);
 		root_element_new = xmlNewNode(NULL,"doc");
 		xmlDocSetRootElement(docNew, root_element_new);
 //		xmlNewChild(extracted, NULL,"motivo", BAD_CAST aux->next->value);
@@ -350,9 +351,9 @@ int main (void)
 		info=xmlNewNode(NULL,"info");
 	}
 
-	/* File Historic.xml exist and need to find his position if there is a historic of the patient */
+	// File Historic.xml exist and need to find his position if there is a historic of the patient
 
-	/*else
+	else
 	{
 		fclose(test);
 		docNew = xmlReadFile(XML_HISTORIC, NULL, 256);
@@ -367,18 +368,18 @@ int main (void)
 		}
 //		xmlNewTextChild(extracted->children,NULL,"motivo",aux->next->value);
 
-		/* if currently is null, there is no historic of that patient */
+		// if currently is null, there is no historic of that patient 
 
-	/*	if(naoAchado)
+		if(naoAchado)
 		{
 			extracted=xmlNewNode(NULL,"paciente");
 			xmlNewChild(extracted,NULL,"numeroPaciente",aux->value);  // faltar verificar se aux->value contem msm o numero do paciente
 			info=xmlNewNode(NULL,"info");			
 		}
 
-		/* there is already a historic of the patient */
+		// there is already a historic of the patient
 
-	/*	else
+		else
 		{
 			extracted=currently;
 			info=extracted->children->next;			
@@ -386,9 +387,9 @@ int main (void)
 	}
 	removed=xmlNewNode(NULL,"removido");
 
-	/* get time: hour,minute,second, day,month,year */
+	// get time: hour,minute,second, day,month,year
 
-/*	if(getFullDataParts(hour,minute,second,day,month,year))
+	if(getFullDataParts(hour,minute,second,day,month,year))
 	{
 		printf("Content-type: text/html\n\n");
 		printf("<html>\n");
@@ -402,7 +403,7 @@ int main (void)
 		exit(OK);
 	}
 	xmlNewChild(removed,NULL,"day",day);
-/*							printf("Content-type: text/html\n\n");
+							printf("Content-type: text/html\n\n");
 		printf("<html>\n");
 		printf("<head>\n");
 		printf("<title>Resultado</title>\n");
@@ -447,7 +448,7 @@ int main (void)
 	xmlCleanupParser();
 	xmlMemoryDump();
   
-/*	root_element = xmlDocGetRootElement(doc);
+	root_element = xmlDocGetRootElement(doc);
 	printf("%s\n",root_element->name);
 
 	for (currently = root_element->children; currently; currently=currently->next)

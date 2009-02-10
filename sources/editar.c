@@ -82,7 +82,7 @@ printf ("        <link  rel=\"stylesheet\" type=\"text/css\" href=\"../css/stand
 printf ("\n");
 printf ("\n");
 printf ("\n");
-printf ("        <script language=\"javascript\" src=\"../js/validacoes.js\"></script>\n");
+printf ("        <script language=\"javascript\" src=\"../js/validacoes.js\">//%s\t%s</script>\n",username,paciente);
 printf ("\n");
 printf ("\n");
 printf ("\n");
@@ -94,6 +94,8 @@ printf ("	<link rel=\"stylesheet\" href=\"../css/tooltip.css\" media=\"screen\">
 printf ("\n");
 printf ("\n");
 printf ("\n");
+printf("<!--%s\t%s-->\n",username,paciente);
+
 
 		printf ("	<script>\n");
 		/*** funcao em javascipt que atribui valores aos campos do formulario ***/
@@ -144,8 +146,10 @@ printf ("\n");
 			else
 				indice1 --;
 		}
+
+printf("//<!--%s\t%s-->\n",username,paciente);
 		
-		usualFreeMemory(NULL);	
+//		usualFreeMemory(NULL);	
 							/*
 							tabela[0] = [\"campo1\",\"casa\"];\n\
 							tabela[1] = [\"campo2\",\"cachorro\"];\n\
@@ -178,6 +182,7 @@ printf ("\n");
 /*******************************************************************************************************************************************************************************************/
 		printf ("	</script>\n");
 		printf ("\n");
+printf("<!--%s\t%s-->\n",username,paciente);
 		printf ("</head>\n");
 		
 //printf ("    <body class=\"style1\" onLoad=\"inicializaOcultos(); preencherCampos(form);\">\n");
@@ -209,8 +214,9 @@ printf ("</div>\n");
 printf ("\n");
 printf ("\n");
 printf ("\n");
-printf ("      <form name=\"form\" id =\"form1\" action=\"doEdit.cgi\" method=\"post\" onsubmit=\"return confirmaEnvio();\">\n", username, paciente);
+printf ("      <form name=\"form\" id =\"form1\" action=\"doEdit.cgi\" method=\"post\" onsubmit=\"return confirmaEnvio();\">\n");
 printf ("\n");
+printf("<!--%s\t%s-->\n",username,paciente); 
 printf("<input type=\"HIDDEN\" name=\"uid\" value=\"%s\">\n",username);
 printf("<input type=\"HIDDEN\" name=\"paciente\" value=\"%s\">\n",paciente);
 printf ("\n");

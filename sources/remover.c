@@ -92,6 +92,7 @@ int main (void)
 	printf("<html>\n");
 	printf("<head>\n");
 	printf("<title>.:. Neural TB .:. Motivo da exclusão</title>\n");
+        printf("<meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\">");
 	printf("<script language=\"javascript\" src=\"../js/motivo.js\" charset=\"UTF-8\"></script>\n");
 	printf("<script language=\"javascript\" src=\"../js/xml.js\" charset=\"UTF-8\"></script>\n");
 	printf("</head>\n");
@@ -130,11 +131,18 @@ int main (void)
 	//printf("<tr>\n");
 	//printf("<td align=\"center\">Para continuar digite o motivo do apagamento do paciente <b>%s</b></td>\n",paciente);
 	printf("<p><h3>Para continuar digite o motivo do apagamento do paciente: <b><span id='nomePaciente'></span></b></h3></p>\n");
+	printf("<p><h3>Data de nascimento:<b><span id='dataNasc'></span></b></h3></p>\n");
 	printf("<input type = \"hidden\" name=\"pacienteNumero\" value = \"%s\">\n",paciente);
-	printf("<input type = \"hidden\" name=\"paciente\" value = \"\">\n");
+	printf("<input type = \"hidden\" name=\"diaNasc\" value = \"\">\n");
+	printf("<input type = \"hidden\" name=\"mesNasc\" value = \"\">\n");
+	printf("<input type = \"hidden\" name=\"anoNasc\" value = \"\">\n");
 	printf("<script>var xmlDoc = loadXMLDoc('../xml/pacientes.xml');\n");
-	printf("document.getElementById(\"nomePaciente\").innerHTML = xmlDoc.getElementsByTagName(\"paciente\")[%s-1].getElementsByTagName(\"nome\")[0].childNodes[0].nodeValue;\n",paciente);
-	printf("document.getElementsByName(\"paciente\")[0].value = xmlDoc.getElementsByTagName(\"paciente\")[%s-1].getElementsByTagName(\"nome\")[0].childNodes[0].nodeValue</script>\n",paciente);
+	printf("document.getElementById(\"nomePaciente\").innerHTML = xmlDoc.getElementsByTagName(\"paciente\")[%s-1].getElementsByTagName(\"nome\")[0].childNodes[0].nodeValue;\n",paciente,paciente,paciente);
+	printf("dataNascimento = xmlDoc.getElementsByTagName(\"paciente\")[%s-1].getElementsByTagName(\"diaNasc\")[0].childNodes[0].nodeValue + '/' + xmlDoc.getElementsByTagName(\"paciente\")[%s-1].getElementsByTagName(\"mesNasc\")[0].childNodes[0].nodeValue + '/' + xmlDoc.getElementsByTagName(\"paciente\")[%s-1].getElementsByTagName(\"anoNasc\")[0].childNodes[0].nodeValue\n",paciente,paciente,paciente);
+	printf("document.getElementById(\"dataNasc\").innerHTML = dataNascimento\n");
+	printf("document.getElementsByName(\"diaNasc\")[0].value = xmlDoc.getElementsByTagName(\"paciente\")[%s-1].getElementsByTagName(\"diaNasc\")[0].childNodes[0].nodeValue\n",paciente);
+	printf("document.getElementsByName(\"mesNasc\")[0].value = xmlDoc.getElementsByTagName(\"paciente\")[%s-1].getElementsByTagName(\"mesNasc\")[0].childNodes[0].nodeValue\n",paciente);
+	printf("document.getElementsByName(\"anoNasc\")[0].value = xmlDoc.getElementsByTagName(\"paciente\")[%s-1].getElementsByTagName(\"anoNasc\")[0].childNodes[0].nodeValue</script>\n",paciente);
 	//printf("</tr>\n");
 	//printf("<tr>\n");
 	//printf("<td align = \"left\">motivo:</td>\n");
@@ -146,7 +154,7 @@ int main (void)
 	//printf("<td><a href = \"%s\">Voltar</a></td>\n",BUSCA_CGI);
 	printf("<a href = \"%s?uid=%s\">Voltar</a>&nbsp;&nbsp;&nbsp;&nbsp;\n",BUSCA_CGI,uid);
 	//printf("<td><input type = \"submit\" value = \"remover\"</td>\n");
-	printf("<input type = \"submit\" value = \"Remover\"\n");
+	printf("<input type = \"submit\" value = \"Remover\"/>\n");
 	//printf("</tr>\n");
 	//printf("</table>\n");
 	printf("</form>\n");
