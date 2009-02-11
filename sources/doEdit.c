@@ -119,14 +119,31 @@ int main (void)
  ******************************************************************************/
 		
 	atual = 1;
+	
+/*	cgi_init_headers();
+	
+	printf ("<html>\n");
+	printf ("\t<head>\n");
+	printf ("\t\t<title>Usu&aacute;rio Editado</title>\n");
+	printf ("\t\t<meta http-equiv=\"refresh\" content=\"10; URL=busca.cgi?uid=%s\" />\n",username);
+	printf ("\t</head>\n");
+	printf ("\t<body>\n");
+	printf ("<span style=\"background-color:green; color: white; font-family: Verdana, Arial; font-size:15pt; padding: 5px\">");*/
 
 		while((cur_node != NULL) && (atual < paciente_id ))
 		{
+			//	old_patient = cur_node->children;
+			//	printf("%s: %s<br>\n", old_patient->name, old_patient->children->content);
 				cur_node = cur_node->next;
 				atual ++;
 		}
 		
 		old_patient = cur_node;
+/*		printf ("</span>");
+		printf ("\t</body>\n");
+	printf ("</html>");
+	
+	return 0;*/
 		
 /******************************************************************************
  *            CHECK IF PATIENT WAS FOUND		*
@@ -147,14 +164,22 @@ int main (void)
  *            ADD NEW FORM                                                    *
  ******************************************************************************/
 	
-	//strUTF = formName;
+	//strUTF = ;
 	new_form = edited_patient;
 	//new_form = xmlNewChild (edited_patient, NULL, BAD_CAST strUTF, NULL);
 	//free(strUTF);//frees formName
 	//cgi_init_headers();
 	//printf ("<html>\n");
 	//printf ("\t<body>\n");
+/*	cgi_init_headers();
 	
+	printf ("<html>\n");
+	printf ("\t<head>\n");
+	printf ("\t\t<title>Usu&aacute;rio Editado</title>\n");
+	printf ("\t\t<meta http-equiv=\"refresh\" content=\"10; URL=busca.cgi?uid=%s\" />\n",username);
+	printf ("\t</head>\n");
+	printf ("\t<body>\n");
+	printf ("<span style=\"background-color:green; color: white; font-family: Verdana, Arial; font-size:15pt; padding: 5px\">");*/
 	for (input = first_input; input; input = input->next)
 	{
 		if (!strcmp(input->name,"form"))
@@ -170,7 +195,7 @@ int main (void)
 		
 		/* Validate tag value input against UTF-8 */
 		strUTF = input->value;
-		//printf("%s \n", strUTF);
+		//printf("%s <br>\n", strUTF);
 		xmlNodeAddContent (new_node, strUTF);
 		free(strUTF);//frees input->value
 		
@@ -178,6 +203,12 @@ int main (void)
 		xmlAddChild (new_form, new_node);
 	}
 
+	/*printf ("</span>");
+		printf ("\t</body>\n");
+	printf ("</html>");
+	
+	return 0;*/
+	
 	//printf ("</html>\n");
 	//printf ("\t</body>\n");
 	//usualFreeMemory(NULL);
@@ -186,7 +217,7 @@ int main (void)
 *	Substituindo o noh antigo pelo novo		*
 ******************************************************************************/
 
-	xmlReplaceNode (old_patient, edited_patient->children);
+	xmlReplaceNode (old_patient, edited_patient);
 	xmlFreeNode (old_patient);
 	
 /******************************************************************************

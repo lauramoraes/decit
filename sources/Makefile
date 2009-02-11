@@ -4,14 +4,14 @@ CFLAGS = -Wall -c
 LD = gcc
 LFLAGS = -Wall -o
 
-LIBCGIDIR = libs/libcgi-1.0
+LIBCGIDIR = libs/
 LIBCGIFLAGS = -L$(LIBCGIDIR) -lcgi
 
 LIBXMLFLAGS = `xml2-config --cflags`
 LIBXMLLIBS  = `xml2-config --libs`
 
 
-CGIBIN = ../cgi-bin
+CGIBIN = ../../public_html/decit/cgi-bin/
 
 ADDPATIENTOBJS = addPatient.o
 SEARCHPATIENTOBJS = searchPatient.o

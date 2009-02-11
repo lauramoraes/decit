@@ -166,15 +166,24 @@ else if (document.implementation
 
 		//CEP
 		codigo+="</td></tr><tr class='par'><td>&nbsp;&nbsp;&nbsp;&nbsp; - CEP:</td><td>";
-		codigo+=x[linha-1].getElementsByTagName("cep")[0].childNodes[0].nodeValue;
+		if ( x[linha-1].getElementsByTagName("cepchk")[0].childNodes[0].nodeValue )
+			codigo+=x[linha-1].getElementsByTagName("cepchk")[0].childNodes[0].nodeValue;
+		else
+			codigo+=x[linha-1].getElementsByTagName("cep")[0].childNodes[0].nodeValue;
+		
 
 		//Telefone
 		codigo+="</td></tr><tr class='par'><td>&nbsp;&nbsp;&nbsp;&nbsp; - Telefone:</td><td>";
 		codigo+=x[linha-1].getElementsByTagName("proprietarioTel")[0].childNodes[0].nodeValue;
+			
 
 		//Telefone para contato
-		codigo+="</td></tr><tr class='par'><td>&nbsp;&nbsp;&nbsp;&nbsp; - Telefone para contato:</td><td>";
-		codigo+="(" + x[linha-1].getElementsByTagName("ddd")[0].childNodes[0].nodeValue + ")" + x[linha-1].getElementsByTagName("telefone")[0].childNodes[0].nodeValue;
+		if( codigo+=x[linha-1].getElementsByTagName("proprietarioTel")[0].childNodes[0].nodeValue != "Não possui" )
+		{
+			codigo+="</td></tr><tr class='par'><td>&nbsp;&nbsp;&nbsp;&nbsp; - Telefone para contato:</td><td>";
+		//	codigo+="(" + x[linha-1].getElementsByTagName("ddd")[0].childNodes[0].nodeValue + ")" + x[linha-1].getElementsByTagName("telefone")[0].childNodes[0].nodeValue;
+		codigo+="(21)" + "tel";
+		}
 		
 		//Nome do contato
 		if (x[linha-1].getElementsByTagName("proprietarioTel")[0].childNodes[0].nodeValue == "Contato")
@@ -334,10 +343,11 @@ else if (document.implementation
 		}
 		
 		//Observações
-		if (x[linha-1].getElementsByTagName("obs1")[0].childNodes.length)
+		if (x[linha-1].getElementsByTagName("obs1")[0])
 		{
 			codigo+="</td></tr><tr class='par'><td>Observações:</td><td>";
 			codigo+=x[linha-1].getElementsByTagName("obs1")[0].childNodes[0].nodeValue;
+			codigo+=x[linha-1].getElementsByTagName("obs1")[0].childNodes[0].lenght;
 		}
 		
 		//Morou/mora com alguém com tuberculose
@@ -400,8 +410,11 @@ else if (document.implementation
 		}
 
 		//Resultado do tratamento notificado no SINAN
-		codigo+="</td></tr><tr class='impar'><td>Resultado do tratamento notificado no SINAN:</td><td>";
-		codigo+=x[linha-1].getElementsByTagName("ressinan")[0].childNodes[0].nodeValue;
+		if (x[linha-1].getElementsByTagName("ressinan")[0])
+		{
+			codigo+="</td></tr><tr class='impar'><td>Resultado do tratamento notificado no SINAN:</td><td>";
+			codigo+=x[linha-1].getElementsByTagName("ressinan")[0].childNodes[0].nodeValue;
+		}
 
 		//Cicatriz vacinal BCG
 		codigo+="</td></tr><tr class='par'><td>Cicatriz vacinal BCG:</td><td>";
@@ -563,7 +576,7 @@ else if (document.implementation
 		codigo+=x[linha-1].getElementsByTagName("rxtor")[0].childNodes[0].nodeValue;
 		
 		//Identificação da área acometida
-		if (x[linha-1].getElementsByTagName("rxtor")[0].childNodes[0].nodeValue != "Não Realizada")
+		if ((x[linha-1].getElementsByTagName("rxtor")[0].childNodes[0].nodeValue != "Não Realizada")&&((x[linha-1].getElementsByTagName("rxtor")[0].childNodes[0].nodeValue != "Em andamento")))
 		{
 			codigo+="</td></tr><tr class='impar'><td>Identificação da área acometida:</td><td>";
 			codigo+=x[linha-1].getElementsByTagName("area")[0].childNodes[0].nodeValue;
@@ -607,7 +620,7 @@ else if (document.implementation
 		//Baciloscopia (1ª amostra)
 		codigo+="</td></tr><tr class='impar'><td>Baciloscopia (1ª amostra):</td><td>";
 		codigo+=x[linha-1].getElementsByTagName("znescar1")[0].childNodes[0].nodeValue;
-		if ((cidade == "Curitiba/Paraná") && (x[linha-1].getElementsByTagName("znescar1")[0].childNodes[0].nodeValue != "Ignorado"))
+		if ((cidade == "Curitiba/Paraná") && (x[linha-1].getElementsByTagName("znescar1")[0].childNodes[0].nodeValue != "Não realizado") && (x[linha-1].getElementsByTagName("znescar1")[0].childNodes[0].nodeValue != "Em andamento"))
 		{
 			codigo+=" mm de enduração" + "</td></tr><tr class='impar'><td>&nbsp;&nbsp;&nbsp;&nbsp; - Data da leitura:</td><td>";
 			codigo+=x[linha-1].getElementsByTagName("horaColeta1")[0].childNodes[0].nodeValue + ":" + x[linha-1].getElementsByTagName("minutoColeta1")[0].childNodes[0].nodeValue;
@@ -625,7 +638,7 @@ else if (document.implementation
 		//Baciloscopia (2ª amostra)
 		codigo+="</td></tr><tr class='impar'><td>Baciloscopia (2ª amostra):</td><td>";
 		codigo+=x[linha-1].getElementsByTagName("znescar2")[0].childNodes[0].nodeValue;
-		if ((cidade == "Curitiba/Paraná") && (x[linha-1].getElementsByTagName("znescar2")[0].childNodes[0].nodeValue != "Ignorado"))
+		if ((cidade == "Curitiba/Paraná") && (x[linha-1].getElementsByTagName("znescar2")[0].childNodes[0].nodeValue != "Não realizado") && (x[linha-1].getElementsByTagName("znescar2")[0].childNodes[0].nodeValue != "Em andamento"))
 		{
 			codigo+=" mm de enduração" + "</td></tr><tr class='impar'><td>&nbsp;&nbsp;&nbsp;&nbsp; - Data da leitura:</td><td>";
 			codigo+=x[linha-1].getElementsByTagName("horaColeta2")[0].childNodes[0].nodeValue + ":" + x[linha-1].getElementsByTagName("minutoColeta2")[0].childNodes[0].nodeValue;
@@ -690,26 +703,42 @@ else if (document.implementation
 			codigo+=x[linha-1].getElementsByTagName("exame4")[0].childNodes[0].nodeValue;
 		}
 	
-		//Desfecho do caso
+		// Acompanhamento
 		codigo+="<tr class='forms'><td colspan='2'><h4>4. Acompanhamento</h4></td></tr>";
-		codigo+="</td></tr><tr class='impar'><td>Desfecho do caso:</td><td>";
-		codigo+=x[linha-1].getElementsByTagName("desfecho")[0].childNodes[0].nodeValue;
 		
+		//Desfecho do caso
+		if (x[linha-1].getElementsByTagName("desfecho")[0])
+		{
+			codigo+="</td></tr><tr class='impar'><td>Desfecho do caso:</td><td>";
+			codigo+=x[linha-1].getElementsByTagName("desfecho")[0].childNodes[0].nodeValue;
+		}
 		//Desfecho do caso diagnosticado como tuberculose
-		codigo+="</td></tr><tr class='par'><td>Desfecho do caso diagnosticado como tuberculose:</td><td>";
-		codigo+=x[linha-1].getElementsByTagName("dtub")[0].childNodes[0].nodeValue;
+		if (x[linha-1].getElementsByTagName("dtub")[0])
+		{
+			codigo+="</td></tr><tr class='par'><td>Desfecho do caso diagnosticado como tuberculose:</td><td>";
+			codigo+=x[linha-1].getElementsByTagName("dtub")[0].childNodes[0].nodeValue;
+		}
 		
 		//Desfecho do caso diagnosticado como NÃO tuberculose
-		codigo+="</td></tr><tr class='impar'><td>Desfecho do caso diagnosticado como NÃO tuberculose:</td><td>";
-		codigo+=x[linha-1].getElementsByTagName("dntub")[0].childNodes[0].nodeValue;
+		if( x[linha-1].getElementsByTagName("dntub")[0] )
+		{
+			codigo+="</td></tr><tr class='impar'><td>Desfecho do caso diagnosticado como NÃO tuberculose:</td><td>";
+			codigo+=x[linha-1].getElementsByTagName("dntub")[0].childNodes[0].nodeValue;
+		}
 		
 		//Se apresentou diagnóstico posterior de tuberculose, onde?
-		codigo+="</td></tr><tr class='par'><td>Se apresentou diagnóstico posterior de tuberculose, onde?</td><td>";
-		codigo+=x[linha-1].getElementsByTagName("aprtbp")[0].childNodes[0].nodeValue;
+		if (x[linha-1].getElementsByTagName("aprtbp")[0])
+		{
+			codigo+="</td></tr><tr class='par'><td>Se apresentou diagnóstico posterior de tuberculose, onde?</td><td>";
+			codigo+=x[linha-1].getElementsByTagName("aprtbp")[0].childNodes[0].nodeValue;
+		}
 		
 		//Data da última consulta/VD
-		codigo+="</td></tr><tr class='impar'><td>Data da última consulta/VD:</td><td>";
-		codigo+=x[linha-1].getElementsByTagName("diaUCons")[0].childNodes[0].nodeValue + "/" + x[linha-1].getElementsByTagName("mesUCons")[0].childNodes[0].nodeValue + "/" + x[linha-1].getElementsByTagName("anoUCons")[0].childNodes[0].nodeValue;
+		if (x[linha-1].getElementsByTagName("diaUCons")[0].childNodes.length)
+		{
+			codigo+="</td></tr><tr class='impar'><td>Data da última consulta/VD:</td><td>";
+			codigo+=x[linha-1].getElementsByTagName("diaUCons")[0].childNodes[0].nodeValue + "/" + x[linha-1].getElementsByTagName("mesUCons")[0].childNodes[0].nodeValue + "/" + x[linha-1].getElementsByTagName("anoUCons")[0].childNodes[0].nodeValue;
+		}
 		
 		//Observações
 		if (x[linha-1].getElementsByTagName("obs3")[0].childNodes.length)
