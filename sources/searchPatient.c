@@ -137,11 +137,15 @@ int main (void)
     printf("<script language=\"javascript\" src=\"../js/xml.js\"></script>\n");
     printf("<script language=\"javascript\" src=\"../js/busca.js\"></script>\n");
 	printf("<script>\n");
-	printf("var contaExib=0\n");
-	printf("var linha=0;\n");
-	printf("function contaLinhas()\n");
+	printf("function mudaCor(tabela, totalLinhas)\n");
 	printf("{\n");
-	printf("	linha+=1;\n");
+	printf("for (linha = 1; linha < totalLinhas; linha++)\n");
+	printf("{\n");
+	printf("	if (linha % 2)\n");
+	printf("		document.getElementById(tabela).rows[linha].style.backgroundColor = \"FFFAFA\";	\n");
+	printf("	else\n");
+	printf("document.getElementById(tabela).rows[linha].style.backgroundColor = \"D7EFFF\";	\n");
+	printf("}\n");
 	printf("}\n");
 	printf("</script>\n");
 	printf("  </head>\n");
@@ -312,7 +316,7 @@ int main (void)
 		fprintf(paciente_xsl,"<iframe name=\"iframeInvisivel\" height=\"0\" width=\"0\"></iframe>\n");*/
 		fprintf(paciente_xsl,"<table id=\"tabelaPacientes\" width=\"650\" align=\"center\" cellspacing=\"1\" cellpadding=\"0\">\n");
 		fprintf(paciente_xsl,"<tr class=\"nome\" align=\"center\">\n");
-		fprintf(paciente_xsl,"<td><h4>Numero</h4></td>\n");
+		fprintf(paciente_xsl,"<td><h4>Número</h4></td>\n");
 		fprintf(paciente_xsl,"<td><h4>Nome</h4></td>\n");
 		fprintf(paciente_xsl,"<td><h4>Data de nascimento</h4></td>\n");
 		fprintf(paciente_xsl,"<td><h4>Data da entrevista</h4></td>\n");
@@ -408,7 +412,7 @@ int main (void)
 		}
 /**************************************************************************************************************************************************************************************************/
 
-		fprintf(paciente_xsl,"<tr class=\"fundoTabela\" align=\"center\" onClick=\"var marcador = 'marcador' + this.rowIndex;if(document.getElementById(marcador).checked == true) document.getElementById('tabelaPacientes').rows[this.rowIndex].style.background = '#99CCFF'; else document.getElementById('tabelaPacientes').rows[this.rowIndex].style.background = '#FFFFFF';\">\n");
+		fprintf(paciente_xsl,"<tr class=\"par\" align=\"center\">\n");
 		fprintf(paciente_xsl,"<td>\n");
 		fprintf(paciente_xsl,"<xsl:number count=\"paciente\" format=\"1\"/>\n");
 		fprintf(paciente_xsl,"</td>\n");
@@ -451,6 +455,7 @@ int main (void)
 		}
 	*/
 		fprintf(paciente_xsl,"</tr>\n");
+		
 		if(opt != 1)
 			fprintf(paciente_xsl,"</xsl:if>\n");
 			
@@ -548,6 +553,7 @@ int main (void)
 		printf("<script>\n");
 		printf("var nroPacTotal = xml.getElementsByTagName(\"paciente\").length;\n");
 		printf("var nroPac= document.getElementById(\"tabelaPacientes\").rows.length;\n");
+		printf("mudaCor(\"tabelaPacientes\", nroPac);\n");
 		printf("document.write(((nroPac-1)*100/nroPacTotal).toFixed(2));\n");
 		printf("document.write(\"%% dos pacientes apresentam o critério procurado\");\n");
 		printf("</script>\n");
