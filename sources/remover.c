@@ -130,7 +130,7 @@ int main (void)
 	//printf("<table align = \"center\">\n");
 	//printf("<tr>\n");
 	//printf("<td align=\"center\">Para continuar digite o motivo do apagamento do paciente <b>%s</b></td>\n",paciente);
-	printf("<p><h3>Para continuar digite o motivo do apagamento do paciente: <b><span id='nomePaciente'></span></b></h3></p>\n");
+	printf("<p><h3>Para continuar digite o motivo da remoção do paciente: <b><span id='nomePaciente'></span></b></h3></p>\n");
 	printf("<p><h3>Data de nascimento:<b><span id='dataNasc'></span></b></h3></p>\n");
 	printf("<input type = \"hidden\" name=\"pacienteNumero\" value = \"%s\">\n",paciente);
 	printf("<input type = \"hidden\" name=\"diaNasc\" value = \"\">\n");
