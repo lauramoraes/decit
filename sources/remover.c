@@ -1,3 +1,15 @@
+/*
+	Universidade Federal do Rio de Janeiro
+	Escola Politecnica
+	Departamento de Engenharia Eletronica e de Computacao
+	
+	Laboratorio de Processamento de Sinais
+	Projeto Decit
+	Arquivo Original: Luiz Balabram
+	Atualização: Laura Moraes
+	Ultima atualizacao: 12/02/2009 
+	*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>

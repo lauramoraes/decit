@@ -5,7 +5,7 @@
  * Description: CGI to find patients in the XML file through XSLT and XPATH   *
  
  Atualização: Laura Moraes
- Ultima atualizacao: 28/10/2008 
+ Ultima atualizacao: 12/02/2009
  ******************************************************************************/
 
 #include <stdio.h>
@@ -177,6 +177,54 @@ int main (void)
     printf("</tr>\n");
     printf(" </table>\n");
 	printf("<p></p>\r\n");
+	printf("	<a id=\"xml1\" href=\"\"></a>\n");
+	printf("	\n");
+printf("	<form action=\"searchPatient.cgi?uid=%s\"  method=\"post\" name=\"check\" id=\"searchForm\"  onSubmit=\"return validarBusca(this);\" />\n", first->value);
+printf("<input type=\"HIDDEN\" name=\"uid\" value=\"%s\">\n",first->value);
+printf("          <table width=\"70%%%%\" border=\"0\" cellpadding=\"1\" cellspacing=\"2\" bordercolor=\"#999999\" id=\"tabela\" align=center>\n");
+printf("             <tr class=\"styleBusca1\">\n");
+printf("                <td width=\"30%%%%\" title=\"Atributo através do qual será realizada a busca\">\n");
+printf("                    <div class=\"styleBusca2\">&nbsp;Busca por</div>\n");
+printf("                </td>\n");
+printf("                <td width=\"20%%%%\" id=\"operador_0\">&nbsp;</td>\n");
+printf("                <td id=\"VALORES_TITULO\" width=\"40%%%%\">\n");
+printf("                    <div class=\"styleBusca2\">&nbsp;</div>\n");
+printf("                </td>\n");
+/*printf("                <td id=\"ORDENA_TITULO\" width=\"10%%%%\" title=\"Ordena os pacientes buscados de acordo com o atributo selecionado\">\n");
+printf("                    <div class=\"styleBusca2\">&nbsp;Ordenar por</div>\n");
+printf("                </td>\n");*/
+printf("             </tr>\n");
+printf("             <tr class=\"fundoTabela\">\n");
+printf("                <td title=\"Atributo através do qual será realizada a busca\">\n");
+printf("                    <div align=\"center\"><strong><font color=\"#003399\" size=\"2\" face=\"Arial, Helvetica, sans-serif\">\n");
+printf("                    <!-- select da celula [1][0] -->\n");
+printf("                    <select name=\"select\" onChange=\"_options(this);\" onKeyUp=\"_options(this.form);\">\n");
+printf("                    <option value=\"1\" selected>&nbsp;Selecione</option>\n");
+printf("                    <option value=\"2.nome\">Nome</option>\n"); //Opcao 2 para nomes
+printf("                    <option value=\"3.diaNasc\">Data de nascimento</option>\n"); //Opcao 3 para datas
+printf("                    <option value=\"4.cidade\">Cidade de estudo</option>\n"); //Opcao 4 para escolhas restritas (com opcoes)
+printf("                    <option value=\"3.diaEntr\">Data da entrevista</option>\n"); //Opcao 3 para datas
+printf("                    </select>\n");
+printf("                    </font></strong></div>\n");
+printf("                </td>\n");
+printf("                <td id=\"operadores\">&nbsp;</td>\n");
+printf("                <td id=\"valores\">&nbsp;</td>\n");
+/*printf("		 		<td id=\"ordena\" title=\"Ordena os pacientes buscados de acordo com o atributo selecionado\">\n");
+printf("                    <!-- select da celula [1][3] -->\n");
+printf("                     <select name=\"selectOrdena\">\n");
+printf("                    <option value=\"id\" selected>N&ordm; de identifica&ccedil;&atilde;o</option>\n");
+printf("                    <option value=\"nome\">Nome</option>\n");
+printf("					<option value=\"diaNasc\">Data de Nascimento</option>\n");
+printf("					<option value=\"cidade\">Cidade de estudo</option>\n");
+printf("                    </select>\n");
+printf("                </td> \n");*/
+printf("             </tr>\n");
+printf("          </table>\n");
+printf("<p align=center> <input type=\"submit\" name=\"Submit\" value=\"Pesquisar\"> </p>\n");
+printf("</form>\n");
+	printf("<div id=\"xml\">\n");
+printf("\n");
+printf("</div>\n");
 //opt=strtoul(first->value,NULL,10);
 ///////// Separa o numero do nome do campo dado em 'first->value' no FORMATO: numero.nome (exemplo: 3.idade) em duas variáveis /////////
 	
@@ -416,13 +464,13 @@ int main (void)
 		fprintf(paciente_xsl,"<td>\n");
 		fprintf(paciente_xsl,"<xsl:number count=\"paciente\" format=\"1\"/>\n");
 		fprintf(paciente_xsl,"</td>\n");
-		fprintf(paciente_xsl,"<td>\n");
+		fprintf(paciente_xsl,"<td class='link' onClick='showXSL({position()},0)'>\n");
 		fprintf(paciente_xsl,"<xsl:value-of select=\"nome\"/>\n");
 		fprintf(paciente_xsl,"</td>\n");
-		fprintf(paciente_xsl,"<td>\n");
+		fprintf(paciente_xsl,"<td class='link' onClick='showXSL({position()},0)'>\n");
 		fprintf(paciente_xsl,"<xsl:value-of select=\"diaNasc\"/>/<xsl:value-of select=\"mesNasc\"/>/<xsl:value-of select=\"anoNasc\"/>\n");
 		fprintf(paciente_xsl,"</td>\n");
-		fprintf(paciente_xsl,"<td>\n");
+		fprintf(paciente_xsl,"<td class='link' onClick='showXSL({position()},0)'>\n");
 		fprintf(paciente_xsl,"<xsl:value-of select=\"diaEntr\"/>/<xsl:value-of select=\"mesEntr\"/>/<xsl:value-of select=\"anoEntr\"/>\n");
 		fprintf(paciente_xsl,"</td>\n");
 		fprintf(paciente_xsl,"<td class='link'  align='center'>\n");

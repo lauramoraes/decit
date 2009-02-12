@@ -8,7 +8,7 @@
 	Autor: Renato Sampaio
 	Arquivo Original: Luiz Evora
 	Atualização: Laura Moraes
-	Ultima atualizacao: 28/10/2008 
+	Ultima atualizacao: 12/02/2009 
 
 	$Author$
 	$Date$
@@ -207,6 +207,7 @@ printf("<tr class=\"nome\" align=\"center\">\n");
 printf("<td><h4>N&uacute;mero</h4></td>");
 printf("<td><h4>Nome</h4></td>");
 printf("<td><h4>Data de nascimento</h4></td>");
+printf("<td><h4>Data da entrevista</h4></td>");
 printf("<td><h4>Remover</h4></td>");
 printf("<td><h4>&nbsp;&nbsp;Editar&nbsp;&nbsp;</h4></td></tr>");
 printf("\n");
@@ -275,14 +276,20 @@ printf("\n");
 printf("\n");
 printf("		document.write(\"<td width='50' align='center'>\" +  linha + \".</td>\");\n");
 printf("\n");
-printf("		document.write(\"<td class='link' onClick='xsl(\" + linha + \",\" + fname + \")'>\");\n");
+printf("		document.write(\"<td class='link' onClick='showXSL(\" + linha + \",\" + fname + \")'>\");\n");
 printf("\n");
 printf("		document.write(x[i].getElementsByTagName(\"nome\")[0].childNodes[0].nodeValue);\n");
 printf("\n");
 printf("		document.write(\"</td>\");\n");
-printf("		document.write(\"<td class='link' align='center' onClick='xsl(\" + linha + \",\" + fname + \")'>\");\n");
+printf("		document.write(\"<td class='link' align='center' onClick='showXSL(\" + linha + \",\" + fname + \")'>\");\n");
 printf("\n");
 printf("		document.write(x[i].getElementsByTagName(\"diaNasc\")[0].childNodes[0].nodeValue + \"/\" + x[i].getElementsByTagName(\"mesNasc\")[0].childNodes[0].nodeValue + \"/\" + x[i].getElementsByTagName(\"anoNasc\")[0].childNodes[0].nodeValue);\n");
+printf("\n");
+printf("		document.write(\"</td>\");\n");
+printf("\n");
+printf("		document.write(\"<td class='link' align='center' onClick='showXSL(\" + linha + \",\" + fname + \")'>\");\n");
+printf("\n");
+printf("		document.write(x[i].getElementsByTagName(\"diaEntr\")[0].childNodes[0].nodeValue + \"/\" + x[i].getElementsByTagName(\"mesEntr\")[0].childNodes[0].nodeValue + \"/\" + x[i].getElementsByTagName(\"anoEntr\")[0].childNodes[0].nodeValue);\n");
 printf("\n");
 printf("		document.write(\"</td>\");\n");
 printf("\n");
