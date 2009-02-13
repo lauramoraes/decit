@@ -3,10 +3,9 @@ import re;
 import os;
 import fcntl;
 
-#PROJECT_PATH = os.path.dirname(__file__) + os.path.sep;
+PROJECT_PATH = os.path.dirname(__file__);
 #USERS_FILE_NAME = PROJECT_PATH + "xml/users.xml";
-PROJECT_PATH = "/home/lauramoraes/public_html/decit/"
-PATIENTS_FILE_NAME = PROJECT_PATH + "xml/pacientes.xml";
+PATIENTS_FILE_NAME = PROJECT_PATH[:-7] + "xml/pacientes.xml";
 
 def fmt2GetMethod(s):
   """Formata a string de entrada "s" para que possa ser passada via metodo GET para o CGI."""

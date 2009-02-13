@@ -62,7 +62,7 @@ htmlPage = """
   <style type="text/css">
   </style>
 </head>
-<body>
+<body bgcolor='#DDDDDD'>
 """% form['uid'].value
 
 if ((birthDay == form['diaNasc'].value) and (birthMonth == form['mesNasc'].value) and (birthYear == form['anoNasc'].value)):
