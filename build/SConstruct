@@ -1,0 +1,90 @@
+#Este e um MakeFile via scons.
+#Usado para compilar e instalar o projeto 'projetotb'. Se nenhum diretorio de instalacao
+#for especificado, o projeto sera instalado no diretorio 'public_html', no mesmo diretorio
+#deste arquivo.
+#
+#Author: Rodrigo Coura Torres (Rodrigo.Torres@cern.ch)
+#
+
+import os;
+import re;
+
+import cgilist;
+
+#Esta funcao devolve todos os arquivos do path sourceDir, que tenha uma das extensoes
+#passadas na lista exList.
+def getSourceFiles(sourcesDir, extList):
+	srcFilter = re.compile('|'.join(['\.%s\Z' % i for i in extList]));
+	return ['%s%s%s' % (sourcesDir, os.path.sep, f) for f in os.listdir(sourcesDir) if srcFilter.search(f) is not None];
+
+#Path de instalacao dos arquivos. Caso a variaveld e ambiente DECIT_INST_DIR esteja definida,
+#o projeto sera instalado no path determinado por ela. Do contrario, o projeto sera instalado
+#no diretorio 'decit' no raiz do pacote.
+install_dir = os.environ.get('DECIT_INST_DIR', os.path.abspath('../decit'));
+
+#Paths para a localizacao de bibliotecas.
+lib_path = ['../sources/libs', '/usr/lib'];
+
+#Lista de bibliotecas a serem linkadas ao projeto.
+used_libs = ['xml2', 'cgi'];
+
+#Paths para a localizacao de arquivos de include.
+inc_path = ['/usr/include/libxml2'];
+
+## Lista de flags de compilacao.
+cxx_flags = ['-ggdb', '-O0'];
+
+#Criando o nosso ambiente de compilacao.
+env = Environment(CPPPATH = inc_path, ENV = os.environ);
+
+#Compilando a biblioteca de funcoes de apoio.
+functions = env.Library(target = 'functions', source = ['../sources/ntbFunctions.c', '../sources/functions.c'],
+                    CCFLAGS = cxx_flags, LIBS = used_libs, LIBPATH = lib_path);
+
+#Compilando os CGIs.
+cgiList = []
+for cgi, srcs in cgilist.cgiMap.iteritems():
+  srcsList = ['../sources/%s' % s for s in srcs];
+  binName = env.Program(target = cgi + '.cgi', source = srcsList, CCFLAGS = cxx_flags, 
+                        LIBS = used_libs + [functions], LIBPATH = lib_path);
+  cgiList.append(binName)
+
+#Como os outros arquivos nao precisam de compilacao, apenas os adicionamos a lista
+#de instalacao.
+htmlList = getSourceFiles('..', ['htm', 'html', 'psp']);
+scriptList = getSourceFiles('../script', ['py', 'sh', 'php']);
+jsList = getSourceFiles('../js', ['js']);
+cssList = getSourceFiles('../css', ['css']);
+imgList = getSourceFiles('../imagens', ['jpg', 'gif', 'png']);
+xmlList = getSourceFiles('../xml', ['xml']);
+xslList = getSourceFiles('../xml', ['xsl']);
+#configList = getSourceFiles('../config',['*']);
+
+#Definindo onde cada tipo de arquivo sera instalado
+cgiInstDir = install_dir + '/cgi-bin';
+htmlInstDir = install_dir;
+scriptInstDir = install_dir + '/cgi-bin';
+jsInstDir = install_dir + '/js';
+cssInstDir = install_dir + '/css';
+imgInstDir = install_dir + '/imagens';
+xmlInstDir = install_dir + '/xml';
+xslInstDir = install_dir + '/xml';
+backupDir = install_dir + '/backup';
+#configInstDir = install_dir;
+
+#Associando os diretorios de instalacao aos arquivos destinados a eles.
+env.Install(cgiInstDir, cgiList);
+env.Install(htmlInstDir, htmlList);
+env.Install(scriptInstDir, scriptList);
+env.Install(jsInstDir, jsList);
+env.Install(cssInstDir, cssList);
+env.Install(imgInstDir, imgList);
+env.Install(xmlInstDir, xmlList);
+env.Install(xslInstDir, xslList);
+#env.Install(configInstDir, configList);
+
+# Criando o diretorio de backup
+Command(Dir(backupDir), [], Mkdir(backupDir))
+
+#Criando o alias de instalacao.
+env.Alias('install', [cgiInstDir, htmlInstDir, scriptInstDir, jsInstDir, cssInstDir, imgInstDir, xmlInstDir, xslInstDir, backupDir]);
