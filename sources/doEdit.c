@@ -171,7 +171,7 @@ int main (void)
 	//cgi_init_headers();
 	//printf ("<html>\n");
 	//printf ("\t<body>\n");
-/*	cgi_init_headers();
+	/*cgi_init_headers();
 	
 	printf ("<html>\n");
 	printf ("\t<head>\n");
@@ -184,11 +184,17 @@ int main (void)
 	{
 		if (!strcmp(input->name,"form"))
 			input = input->next;
+			
+		if (!strcmp(input->name,"uid"))
+			input = input->next;
+			
+		if (!strcmp(input->name,"paciente"))
+			input = input->next;
 		
 		
 		/* Validate tag name input against UTF-8 */
 		strUTF = input->name;
-		//printf("%s = ", strUTF);
+		//printf("%s : \n", strUTF);
 		new_node = xmlNewNode (NULL, strUTF);
 		free(strUTF);//frees input->name
 		

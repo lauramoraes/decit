@@ -4269,7 +4269,7 @@ printf ("\n");
 printf ("\n");
 printf ("                       <td class=\"fontRight\">\n");
 printf ("\n");
-printf ("									   Porcentagem: <input type=\"text\" name=\"probpercent\" size=3 maxlength=3 onBlur=\"if(this.value != '') {validarCampoNumerico(this,3,0,100)}\">%%<br>\n");
+printf ("									   Porcentagem: <input type=\"text\" name=\"probpercent\" size=3 maxlength=3 onBlur=\"if(this.value != '') {validarCampoNumerico(this,0,0,100)}\">%%<br>\n");
 printf ("									   \n");
 printf ("\n");
 printf ("                                       Alta <input type=\"radio\" name=\"probclin\" value=\"Alta\"><br>\n");
