@@ -9,7 +9,7 @@
      Laboratorio de Processamento de Sinais
 	
      Atualizacao: Laura de Oliveira Fernandes Moraes
-     Ultima atualizacao: 12/02/2009 */
+     Ultima atualizacao: 21/07/2008 */
 
 function loadXMLDoc(fname)
 {
@@ -55,7 +55,7 @@ else if (document.implementation
   }
 }
 
-	function showXSL(linha, fname)
+	function xsl(linha, fname)
 	{
 		var xmlDoc=null;
 		if (window.ActiveXObject)
@@ -166,7 +166,8 @@ else if (document.implementation
 
 		//CEP
 		codigo+="</td></tr><tr class='par'><td>&nbsp;&nbsp;&nbsp;&nbsp; - CEP:</td><td>";
-		if ( x[linha-1].getElementsByTagName("cepchk")[0].childNodes[0].nodeValue )
+		//if ( (x[linha-1].getElementsByTagName("cepchk")[0].childNodes[0].nodeValue) && (x[linha-1].getElementsByTagName("cepchk")) )
+		if ( x[linha-1].getElementsByTagName("cepchk").length )
 			codigo+=x[linha-1].getElementsByTagName("cepchk")[0].childNodes[0].nodeValue;
 		else
 			codigo+=x[linha-1].getElementsByTagName("cep")[0].childNodes[0].nodeValue;
@@ -343,7 +344,7 @@ else if (document.implementation
 		}
 		
 		//Observações
-		if (x[linha-1].getElementsByTagName("obs1")[0])
+		if (x[linha-1].getElementsByTagName("obs1")[0].childNodes[0])
 		{
 			codigo+="</td></tr><tr class='par'><td>Observações:</td><td>";
 			codigo+=x[linha-1].getElementsByTagName("obs1")[0].childNodes[0].nodeValue;
@@ -758,7 +759,7 @@ else if (document.implementation
 		}
 	}
 	
-	function mostraCidade(cidade1, cidade2, cidade3, username)
+	function mostraCidade(cidade1, cidade2, cidade3)
 	{
 		var xmlDoc=null;
 		if (window.ActiveXObject)
@@ -787,10 +788,7 @@ else if (document.implementation
 		codigo+="<tr class='nome' align='center'>";
 		codigo+="<td><h4>N&uacute;mero</h4></td>";
 		codigo+="<td><h4>Nome</h4></td>";
-		codigo+="<td><h4>Data de nascimento</h4></td>";
-		codigo+="<td><h4>Data da entrevista</h4></td>";
-		codigo+="<td><h4>Remover</h4></td>";
-		codigo+="<td><h4>Editar</h4></td></tr>";
+		codigo+="<td><h4>Data de nascimento</h4></td></tr>";
 		linha = 0;
 		for (i=0;i<x.length;i++)
 		{ 
@@ -804,21 +802,12 @@ else if (document.implementation
 				//codigo+="<tr class='nome'";
 				//codigo+="<td></td>";
 				codigo+="<td width='50' align='center'>" +  linha + ".</td>";
-				codigo+="<td class='link' onClick='showXSL(" + linha + "," + fname + ")'>";
+				codigo+="<td class='link' onClick='xsl(" + linha + "," + fname + ")'>";
 				codigo+=x[i].getElementsByTagName("nome")[0].childNodes[0].nodeValue;
 				codigo+="</td>";
-				codigo+="<td class='link' align='center' onClick='showXSL(" + linha + "," + fname + ")'>";
+				codigo+="<td class='link' align='center' onClick='xsl(" + linha + "," + fname + ")'>";
 				codigo+= x[i].getElementsByTagName("diaNasc")[0].childNodes[0].nodeValue + "/" + x[i].getElementsByTagName("mesNasc")[0].childNodes[0].nodeValue + "/" + x[i].getElementsByTagName("anoNasc")[0].childNodes[0].nodeValue;
 				codigo+="</td>";
-				codigo+="<td class='link' align='center' onClick='showXSL(" + linha + "," + fname + ")'>";
-				codigo+= x[i].getElementsByTagName("diaEntr")[0].childNodes[0].nodeValue + "/" + x[i].getElementsByTagName("mesEntr")[0].childNodes[0].nodeValue + "/" + x[i].getElementsByTagName("anoEntr")[0].childNodes[0].nodeValue;
-				codigo+="</td>";
-				codigo+="<td class='link'  align='center'>"
-				codigo+="<a href=\"remover.cgi?paciente=" + linha + "&uid=" + username + "\">Remover";
-				codigo+="</a></td>";
-				codigo+="<td class='link'  align='center'>"
-				codigo+="<a href=\"editar.cgi?paciente=" + linha + "&uid=" + username + "\">Editar";
-				codigo+="</a></td>";
 				codigo+="</tr>";
 			}	
 		}

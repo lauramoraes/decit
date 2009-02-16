@@ -72,7 +72,7 @@
 				k = 0;
 				campo = document.getElementById(tabela).rows[i].getElementsByTagName("textarea")[j]
 
-				if (campo.name.substring(0,3) != "obs") //Os campo que comecam com obs não possuem preenchimento obrigatório
+				if ((campo.name.substring(0,3) != "obs") && (campo.name.substring(0,11) != "complemento")) //Os campo que comecam com obs e complemento não possuem preenchimento obrigatório
 				{	//Verifica se os outros campos não estão preenchidos somente com espacos
 					while ((haveSpace == 0) && (k < campo.value.length)) 
 					{

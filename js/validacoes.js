@@ -265,18 +265,28 @@
 		
 		for (i = 0; i < document.getElementById(tabela).rows.length; i++)
 		{
-			if (i != 6)
+			
+			if (box.checked = true)
 			{
-				if (box.checked = true)
+				if (i != 6)
 				{
 					document.getElementById(tabela).rows[i].style.display = "";//
 				}
-				else
-				{
-					document.getElementById(tabela).rows[i].style.display = "none";
-				}
+			}
+			else
+			{
+				document.getElementById(tabela).rows[i].style.display = "none";
 			}
 		}
+	}
+	
+	function hideAcompanhamento()
+	{
+		var i;
+		var tabela="tabelaAcompanhamento";
+		
+		for (i = 1; i < document.getElementById(tabela).rows.length; i++)
+			document.getElementById(tabela).rows[i].style.display = "none";
 	}
 		
 			 
