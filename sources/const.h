@@ -28,7 +28,7 @@
 
 #define MAX_LENGTH_HEALTH_CENTER 32
 
-#define REMOVER_CGI "../cgi-bin/removerXML.cgi"
+#define REMOVER_CGI "../cgi-bin/remover.py"
 #define BUSCA_CGI "../cgi-bin/busca.cgi"
 
 #define MAX_LENGTH_UID 24

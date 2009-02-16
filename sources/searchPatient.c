@@ -5,7 +5,7 @@
  * Description: CGI to find patients in the XML file through XSLT and XPATH   *
  
  Atualização: Laura Moraes
- Ultima atualizacao: 28/10/2008 
+ Ultima atualizacao: 12/02/2009
  ******************************************************************************/
 
 #include <stdio.h>
@@ -35,9 +35,10 @@ int main (void)
 	char originalString[10240];
 	char processedString[10240];
 	char hexa[3];
+	char* username;
 	FILE* paciente_xsl;
 	const char *length;
-	chainType *form, *aux, *first;
+	chainType *form, *aux, *first, *dates;
 	
 /******************************************************************************
  *                      READ CONTENT StrING FROM SERVER                       *
@@ -136,11 +137,15 @@ int main (void)
     printf("<script language=\"javascript\" src=\"../js/xml.js\"></script>\n");
     printf("<script language=\"javascript\" src=\"../js/busca.js\"></script>\n");
 	printf("<script>\n");
-	printf("var contaExib=0\n");
-	printf("var linha=0;\n");
-	printf("function contaLinhas()\n");
+	printf("function mudaCor(tabela, totalLinhas)\n");
 	printf("{\n");
-	printf("	linha+=1;\n");
+	printf("for (linha = 1; linha < totalLinhas; linha++)\n");
+	printf("{\n");
+	printf("	if (linha % 2)\n");
+	printf("		document.getElementById(tabela).rows[linha].style.backgroundColor = \"FFFAFA\";	\n");
+	printf("	else\n");
+	printf("document.getElementById(tabela).rows[linha].style.backgroundColor = \"D7EFFF\";	\n");
+	printf("}\n");
 	printf("}\n");
 	printf("</script>\n");
 	printf("  </head>\n");
@@ -172,10 +177,58 @@ int main (void)
     printf("</tr>\n");
     printf(" </table>\n");
 	printf("<p></p>\r\n");
+	printf("	<a id=\"xml1\" href=\"\"></a>\n");
+	printf("	\n");
+printf("	<form action=\"searchPatient.cgi?uid=%s\"  method=\"post\" name=\"check\" id=\"searchForm\"  onSubmit=\"return validarBusca(this);\" />\n", first->value);
+printf("<input type=\"HIDDEN\" name=\"uid\" value=\"%s\">\n",first->value);
+printf("          <table width=\"70%%%%\" border=\"0\" cellpadding=\"1\" cellspacing=\"2\" bordercolor=\"#999999\" id=\"tabela\" align=center>\n");
+printf("             <tr class=\"styleBusca1\">\n");
+printf("                <td width=\"30%%%%\" title=\"Atributo através do qual será realizada a busca\">\n");
+printf("                    <div class=\"styleBusca2\">&nbsp;Busca por</div>\n");
+printf("                </td>\n");
+printf("                <td width=\"20%%%%\" id=\"operador_0\">&nbsp;</td>\n");
+printf("                <td id=\"VALORES_TITULO\" width=\"40%%%%\">\n");
+printf("                    <div class=\"styleBusca2\">&nbsp;</div>\n");
+printf("                </td>\n");
+/*printf("                <td id=\"ORDENA_TITULO\" width=\"10%%%%\" title=\"Ordena os pacientes buscados de acordo com o atributo selecionado\">\n");
+printf("                    <div class=\"styleBusca2\">&nbsp;Ordenar por</div>\n");
+printf("                </td>\n");*/
+printf("             </tr>\n");
+printf("             <tr class=\"fundoTabela\">\n");
+printf("                <td title=\"Atributo através do qual será realizada a busca\">\n");
+printf("                    <div align=\"center\"><strong><font color=\"#003399\" size=\"2\" face=\"Arial, Helvetica, sans-serif\">\n");
+printf("                    <!-- select da celula [1][0] -->\n");
+printf("                    <select name=\"select\" onChange=\"_options(this);\" onKeyUp=\"_options(this.form);\">\n");
+printf("                    <option value=\"1\" selected>&nbsp;Selecione</option>\n");
+printf("                    <option value=\"2.nome\">Nome</option>\n"); //Opcao 2 para nomes
+printf("                    <option value=\"3.diaNasc\">Data de nascimento</option>\n"); //Opcao 3 para datas
+printf("                    <option value=\"4.cidade\">Cidade de estudo</option>\n"); //Opcao 4 para escolhas restritas (com opcoes)
+printf("                    <option value=\"3.diaEntr\">Data da entrevista</option>\n"); //Opcao 3 para datas
+printf("                    </select>\n");
+printf("                    </font></strong></div>\n");
+printf("                </td>\n");
+printf("                <td id=\"operadores\">&nbsp;</td>\n");
+printf("                <td id=\"valores\">&nbsp;</td>\n");
+/*printf("		 		<td id=\"ordena\" title=\"Ordena os pacientes buscados de acordo com o atributo selecionado\">\n");
+printf("                    <!-- select da celula [1][3] -->\n");
+printf("                     <select name=\"selectOrdena\">\n");
+printf("                    <option value=\"id\" selected>N&ordm; de identifica&ccedil;&atilde;o</option>\n");
+printf("                    <option value=\"nome\">Nome</option>\n");
+printf("					<option value=\"diaNasc\">Data de Nascimento</option>\n");
+printf("					<option value=\"cidade\">Cidade de estudo</option>\n");
+printf("                    </select>\n");
+printf("                </td> \n");*/
+printf("             </tr>\n");
+printf("          </table>\n");
+printf("<p align=center> <input type=\"submit\" name=\"Submit\" value=\"Pesquisar\"> </p>\n");
+printf("</form>\n");
+	printf("<div id=\"xml\">\n");
+printf("\n");
+printf("</div>\n");
 //opt=strtoul(first->value,NULL,10);
 ///////// Separa o numero do nome do campo dado em 'first->value' no FORMATO: numero.nome (exemplo: 3.idade) em duas variáveis /////////
 	
-	
+	username = first->value;
 	first = first->next;
 	while (((first->value)[i] != '.')&&((first->value)[i] != '\0'))
 	{
@@ -195,7 +248,7 @@ int main (void)
 	
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	paciente_xsl= fopen("../xml/buscaPaciente.xsl", "w");
-	fprintf(paciente_xsl,"<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\r\n");
+	fprintf(paciente_xsl,"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n");
 	fprintf(paciente_xsl,"<xsl:stylesheet version=\"1.0\" xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\">\r\n");
 		/***** Se o campo de busca for nome essas variaveis serao usadas *****/
 		if(opt == 2)
@@ -251,6 +304,13 @@ int main (void)
 					break;
 				}
 			break;
+			case 3: //Caso de datas
+				fprintf(paciente_xsl,"<xsl:variable name=\"contador\" select=\"count(doc/paciente[%s='%s'])\" />\n",fieldName, first->next->value);
+				dates = first->next->next;
+				fprintf(paciente_xsl,"<xsl:variable name=\"contadorMes\" select=\"count(doc/paciente[%s='%s'])\" />\n",dates->attribute, dates->value);
+				dates = dates->next;
+				fprintf(paciente_xsl,"<xsl:variable name=\"contadorAno\" select=\"count(doc/paciente[%s='%s'])\" />\n",dates->attribute, dates->value);
+			break;
 			/*case 3: //Atributo idade
 				switch(strtoul(first->next->value,NULL, 10)) //valor do campo de operador
 				{
@@ -291,30 +351,25 @@ int main (void)
 		fprintf(paciente_xsl,"<body>\n");
 		fprintf(paciente_xsl,"<xsl:choose>\n");
 		fprintf(paciente_xsl,"<xsl:when test=\"$contador != 0\">\n");
+		
+		if (opt == 3) //Caso seja data, eh preciso considerar os outros contadores
+		{
+			fprintf(paciente_xsl,"<xsl:choose>\n");
+			fprintf(paciente_xsl,"<xsl:when test=\"$contadorMes != 0\">\n");
+			fprintf(paciente_xsl,"<xsl:choose>\n");
+			fprintf(paciente_xsl,"<xsl:when test=\"$contadorAno != 0\">\n");
+		}
+		
 		/***** Iframe invisivel onde serao rodadas as CGIs de visto de paciente sem carregar uma nova pagina do browser *****
 		fprintf(paciente_xsl,"<iframe name=\"iframeInvisivel\" height=\"0\" width=\"0\"></iframe>\n");*/
-		fprintf(paciente_xsl,"<table id=\"tabelaPacientes\" width=\"100%%\" border=\"1\" bordercolor=\"#FFFFFF\" cellspacing=\"0\" cellpadding=\"2\">\n");
-		fprintf(paciente_xsl,"<tr class=\"styleBusca1\">\n");
-		fprintf(paciente_xsl,"<th width=\"100\">Marcador</th>\n");
-		fprintf(paciente_xsl,"<th width=\"50\">Nome</th>\n");
-		/*fprintf(paciente_xsl,"<th width=\"50\">Remover</th>\n");
-		fprintf(paciente_xsl,"<th width=\"50\">ID</th>\n");
-		fprintf(paciente_xsl,"<th width=\"250\">Nome</th>\n");*/
-		fprintf(paciente_xsl,"<th width=\"100\">Data de Nascimento</th>\n");
-		/*fprintf(paciente_xsl,"<th width=\"50\">Idade</th>\n");*/
-		fprintf(paciente_xsl,"<th width=\"100\">Sexo</th>\n");
-		fprintf(paciente_xsl,"<th width=\"50\">Tosse</th>\n");
-		fprintf(paciente_xsl,"<th width=\"100\">Dor torácica/Dor no peito</th>\n");
-		fprintf(paciente_xsl,"<th width=\"100\">Sudorese Noturna</th>\n");
-		fprintf(paciente_xsl,"<th width=\"50\">Febre</th>\n");
-		fprintf(paciente_xsl,"<th width=\"50\">Emagrecimento</th>\n");
-		fprintf(paciente_xsl,"<th width=\"50\">Dispnéia</th>\n");
-		/*fprintf(paciente_xsl,"<th width=\"50\">Anorexia</th>\n");*/
-		fprintf(paciente_xsl,"<th width=\"100\">Hábito de fumar</th>\n");;
-		/*fprintf(paciente_xsl,"<th width=\"100\">TB Extrapulmonar</th>\n");*/
-		fprintf(paciente_xsl,"<th width=\"100\">Internação Hospitalar</th>\n");
-		/*fprintf(paciente_xsl,"<th width=\"100\">SIDA</th>\n");
-		fprintf(paciente_xsl,"<th width=\"500\">Observações</th>\n");*/
+		fprintf(paciente_xsl,"<table id=\"tabelaPacientes\" width=\"650\" align=\"center\" cellspacing=\"1\" cellpadding=\"0\">\n");
+		fprintf(paciente_xsl,"<tr class=\"nome\" align=\"center\">\n");
+		fprintf(paciente_xsl,"<td><h4>Número</h4></td>\n");
+		fprintf(paciente_xsl,"<td><h4>Nome</h4></td>\n");
+		fprintf(paciente_xsl,"<td><h4>Data de nascimento</h4></td>\n");
+		fprintf(paciente_xsl,"<td><h4>Data da entrevista</h4></td>\n");
+		fprintf(paciente_xsl,"<td><h4>Remover</h4></td>\n");
+		fprintf(paciente_xsl,"<td><h4>Editar</h4></td>\n");
 
 		/***** Os resultados do nnet sao exibidos apenas para medicos e administradores! 
 	/*	if (!strcmp(status, "medico") || !strcmp(status, "admin"))
@@ -373,6 +428,13 @@ int main (void)
 					break;
 				}
 			break;
+			case 3:
+				fprintf(paciente_xsl,"<xsl:if test=\"%s ='%s'\">\n",fieldName, first->next->value);
+				dates = first->next->next;
+				fprintf(paciente_xsl,"<xsl:if test=\"%s ='%s'\">\n",dates->attribute, dates->value);
+				dates = dates->next;
+				fprintf(paciente_xsl,"<xsl:if test=\"%s ='%s'\">\n",dates->attribute, dates->value);
+			break;
 			// buscar idade 
 			/*case 3:
 				switch(strtoul(first->next->value,NULL, 10)) //valor do campo de operador
@@ -398,58 +460,26 @@ int main (void)
 		}
 /**************************************************************************************************************************************************************************************************/
 
-		fprintf(paciente_xsl,"<tr class=\"fundoTabela\" align=\"center\" onClick=\"var marcador = 'marcador' + this.rowIndex;if(document.getElementById(marcador).checked == true) document.getElementById('tabelaPacientes').rows[this.rowIndex].style.background = '#99CCFF'; else document.getElementById('tabelaPacientes').rows[this.rowIndex].style.background = '#FFFFFF';\">\n");
+		fprintf(paciente_xsl,"<tr class=\"par\" align=\"center\">\n");
 		fprintf(paciente_xsl,"<td>\n");
-		fprintf(paciente_xsl,"<xsl:number count=\"paciente\" format=\"001\" />\n");
+		fprintf(paciente_xsl,"<xsl:number count=\"paciente\" format=\"1\"/>\n");
 		fprintf(paciente_xsl,"</td>\n");
-		fprintf(paciente_xsl,"<td>\n");
+		fprintf(paciente_xsl,"<td class='link' onClick='showXSL({position()},0)'>\n");
 		fprintf(paciente_xsl,"<xsl:value-of select=\"nome\"/>\n");
 		fprintf(paciente_xsl,"</td>\n");
-		fprintf(paciente_xsl,"<td>\n");
+		fprintf(paciente_xsl,"<td class='link' onClick='showXSL({position()},0)'>\n");
 		fprintf(paciente_xsl,"<xsl:value-of select=\"diaNasc\"/>/<xsl:value-of select=\"mesNasc\"/>/<xsl:value-of select=\"anoNasc\"/>\n");
 		fprintf(paciente_xsl,"</td>\n");
-		/*fprintf(paciente_xsl,"<td>\n");
-		fprintf(paciente_xsl,"<xsl:value-of select=\"idade\"/>\n");
-		fprintf(paciente_xsl,"</td>\n");*/
-		fprintf(paciente_xsl,"<td>\n");
-		fprintf(paciente_xsl,"<xsl:value-of select=\"sexo\"/>\n");
+		fprintf(paciente_xsl,"<td class='link' onClick='showXSL({position()},0)'>\n");
+		fprintf(paciente_xsl,"<xsl:value-of select=\"diaEntr\"/>/<xsl:value-of select=\"mesEntr\"/>/<xsl:value-of select=\"anoEntr\"/>\n");
 		fprintf(paciente_xsl,"</td>\n");
-		fprintf(paciente_xsl,"<td>\n");
-		fprintf(paciente_xsl,"<xsl:value-of select=\"tosse\"/>\n");
+		fprintf(paciente_xsl,"<td class='link'  align='center'>\n");
+		fprintf(paciente_xsl,"<a href=\"remover.cgi?paciente={position()}&amp;uid=%s\">Remover</a>\n",username);
 		fprintf(paciente_xsl,"</td>\n");
-		fprintf(paciente_xsl,"<td>\n");
-		fprintf(paciente_xsl,"<xsl:value-of select=\"hempto\"/>\n");
+		fprintf(paciente_xsl,"<td class='link'  align='center'>\n");
+		fprintf(paciente_xsl,"<a href=\"editar.cgi?paciente={position()}&amp;uid=%s\">Editar</a>\n",username);
 		fprintf(paciente_xsl,"</td>\n");
-		fprintf(paciente_xsl,"<td>\n");
-		fprintf(paciente_xsl,"<xsl:value-of select=\"sudore\"/>\n");
-		fprintf(paciente_xsl,"</td>\n");
-		fprintf(paciente_xsl,"<td>\n");
-		fprintf(paciente_xsl,"<xsl:value-of select=\"febre\"/>\n");
-		fprintf(paciente_xsl,"</td>\n");
-		fprintf(paciente_xsl,"<td>\n");
-		fprintf(paciente_xsl,"<xsl:value-of select=\"emagre\"/>\n");
-		fprintf(paciente_xsl,"</td>\n");
-		fprintf(paciente_xsl,"<td>\n");
-		fprintf(paciente_xsl,"<xsl:value-of select=\"dispn\"/>\n");
-		fprintf(paciente_xsl,"</td>\n");
-		/*fprintf(paciente_xsl,"<td>\n");
-		fprintf(paciente_xsl,"<xsl:value-of select=\"anorexia\"/>\n");
-		fprintf(paciente_xsl,"</td>\n");*/
-		fprintf(paciente_xsl,"<td>\n");
-		fprintf(paciente_xsl,"<xsl:value-of select=\"fumo\"/>\n");
-		fprintf(paciente_xsl,"</td>\n");
-		/*fprintf(paciente_xsl,"<td>\n");
-		fprintf(paciente_xsl,"<xsl:value-of select=\"tb_extrapulmonar\"/>\n");
-		fprintf(paciente_xsl,"</td>\n");*/
-		fprintf(paciente_xsl,"<td>\n");
-		fprintf(paciente_xsl,"<xsl:value-of select=\"intern\"/>\n");
-		fprintf(paciente_xsl,"</td>\n");
-		/*fprintf(paciente_xsl,"<td>\n");
-		fprintf(paciente_xsl,"<xsl:value-of select=\"sida\"/>\n");
-		fprintf(paciente_xsl,"</td>\n");
-		fprintf(paciente_xsl,"<td>\n");
-		fprintf(paciente_xsl,"&#160;<xsl:value-of select=\"observacoes\"/>\n");
-		fprintf(paciente_xsl,"</td>\n");*/
+
 		/**************************************************************************
 		 *                        VERIFICANDO NIVEL DE ACESSO DO USUARIO          *
 		 **************************************************************************/
@@ -473,8 +503,16 @@ int main (void)
 		}
 	*/
 		fprintf(paciente_xsl,"</tr>\n");
+		
 		if(opt != 1)
 			fprintf(paciente_xsl,"</xsl:if>\n");
+			
+		if (opt == 3) //Caso seja data, eh preciso fechar os outros 'if'
+		{
+			fprintf(paciente_xsl,"</xsl:if>\n");
+			fprintf(paciente_xsl,"</xsl:if>\n");
+		}
+			
 		fprintf(paciente_xsl,"</xsl:for-each>\n");
 		//fprintf(paciente_xsl,"</form>\n");
 		fprintf(paciente_xsl,"</table>\n");
@@ -483,6 +521,21 @@ int main (void)
 		fprintf(paciente_xsl,"<p>&#160;&#160;&#160;&#160;&#160;<b>Não foram encontrados pacientes.</b></p>\n");
 		fprintf(paciente_xsl,"</xsl:otherwise>\n");
 		fprintf(paciente_xsl,"</xsl:choose>\n");
+		
+		if (opt == 3) //Caso seja data, eh preciso fechar os outros 'when'
+		{
+			fprintf(paciente_xsl,"</xsl:when>\n");
+			fprintf(paciente_xsl,"<xsl:otherwise>\n");
+			fprintf(paciente_xsl,"<p>&#160;&#160;&#160;&#160;&#160;<b>Não foram encontrados pacientes.</b></p>\n");
+			fprintf(paciente_xsl,"</xsl:otherwise>\n");
+			fprintf(paciente_xsl,"</xsl:choose>\n");
+			fprintf(paciente_xsl,"</xsl:when>\n");
+			fprintf(paciente_xsl,"<xsl:otherwise>\n");
+			fprintf(paciente_xsl,"<p>&#160;&#160;&#160;&#160;&#160;<b>Não foram encontrados pacientes.</b></p>\n");
+			fprintf(paciente_xsl,"</xsl:otherwise>\n");
+			fprintf(paciente_xsl,"</xsl:choose>\n");
+		}
+
 		fprintf(paciente_xsl,"</body>\n");
 		fprintf(paciente_xsl,"</html>\n");
 		fprintf(paciente_xsl,"</xsl:template>\n");
@@ -548,6 +601,7 @@ int main (void)
 		printf("<script>\n");
 		printf("var nroPacTotal = xml.getElementsByTagName(\"paciente\").length;\n");
 		printf("var nroPac= document.getElementById(\"tabelaPacientes\").rows.length;\n");
+		printf("mudaCor(\"tabelaPacientes\", nroPac);\n");
 		printf("document.write(((nroPac-1)*100/nroPacTotal).toFixed(2));\n");
 		printf("document.write(\"%% dos pacientes apresentam o critério procurado\");\n");
 		printf("</script>\n");

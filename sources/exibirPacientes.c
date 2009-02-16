@@ -6,6 +6,9 @@
 	Laboratorio de Processamento de Sinais
 	Projeto Decit
 	Autor: Renato Sampaio
+	Arquivo Original: Luiz Evora
+	Atualização: Laura Moraes
+	Ultima atualizacao: 12/02/2009 
 
 	$Author$
 	$Date$
@@ -70,7 +73,7 @@ printf ("\n");
 printf ("  </head>\n");
 printf ("\n");
 printf ("<!--  <body onLoad=\"displayResult('../xml','../xml/pacientes.xml','../xml/nomes.xsl');\" class=\"style1\">-->\n");
-printf ("<body class=\"style1\" onLoad=\"mostraCidade(document.getElementById('PR'),document.getElementById('CE'), document.getElementById('RJ'))\">\n");
+printf ("<body class=\"style1\" onLoad=\"mostraCidade(document.getElementById('PR'),document.getElementById('CE'), document.getElementById('RJ'), '%s')\">\n", username);
 printf ("     <table height=\"120\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" id= \"d\">\n");
 printf ("	<tr bgcolor=\"#CCCCCC\">\n");
 printf ("	    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>\n");

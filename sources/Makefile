@@ -11,7 +11,7 @@ LIBXMLFLAGS = `xml2-config --cflags`
 LIBXMLLIBS  = `xml2-config --libs`
 
 
-CGIBIN = ../../public_html/decit/cgi-bin/
+CGIBIN = ../../public_html/decit/cgi-bin
 
 ADDPATIENTOBJS = addPatient.o
 SEARCHPATIENTOBJS = searchPatient.o
@@ -29,14 +29,12 @@ HTML_REMOVER_OBJS = remover.o
 HTML_REMOVERXML_OBJS = removerXML.o
 HTML_EDITAR_OBJS = editar.o
 HTML_DOEDIT_OBJS = ntbFunctions.o doEdit.o
-HTML_GIVEID_OBJS = ntbFunctions.o giveId.o
 
-
-EXECSCGI =  addPatient.cgi searchPatient.cgi backup.cgi principal.cgi login.cgi busca.cgi formulario.cgi exibirPacientes.cgi exibirRecusa.cgi imprimir.cgi remover.cgi editar.cgi removerXML.cgi doEdit.cgi giveId.cgi
+EXECSCGI =  addPatient.cgi searchPatient.cgi backup.cgi principal.cgi login.cgi busca.cgi formulario.cgi exibirPacientes.cgi exibirRecusa.cgi imprimir.cgi remover.cgi editar.cgi removerXML.cgi doEdit.cgi
 EXECSC = addPatient searchPatient backup
 
 .c.o:
-	$(CC) $(CFLAGS) $< -lc $(LIBXMLFLAGS) 
+	$(CC) $(CFLAGS) $< $(LIBXMLFLAGS)
 
 all: $(EXECSCGI) clean final
 
@@ -94,10 +92,6 @@ editar.cgi: $(HTML_EDITAR_OBJS)
 	
 doEdit.cgi: $(HTML_DOEDIT_OBJS)
 	$(LD) $(LFLAGS) $@ $(HTML_DOEDIT_OBJS) $(LIBXMLLIBS) $(LIBCGIFLAGS)
-	mv $@ $(CGIBIN)
-	
-giveId.cgi: $(HTML_GIVEID_OBJS)
-	$(LD) $(LFLAGS) $@ $(HTML_GIVEID_OBJS) $(LIBXMLLIBS) $(LIBCGIFLAGS)
 	mv $@ $(CGIBIN)
 	
 final:
