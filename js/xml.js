@@ -55,7 +55,7 @@ else if (document.implementation
   }
 }
 
-	function xsl(linha, fname)
+	function showXSL(linha, fname)
 	{
 		var xmlDoc=null;
 		if (window.ActiveXObject)
