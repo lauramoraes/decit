@@ -29,8 +29,20 @@ function _options(opcao)
 			document.all.tabela.rows[1].cells[1].innerHTML=eval(("\"<div align='center'> <select id='operator' name='nameOperator' size='1'><option value='1'>Contém</option><option value='2'>Exatamente igual a</option><option value='3'>Começado por</option><option value='4' selected></option></select></div>\"" ));
 
 		break;
+		
+		case "3.diaNasc":  //Data de nascimento
 
-		case "3.cidade":    //Cidade de estudo
+			document.getElementById("operador_0").innerHTML="<div class=\"styleBusca2\">Operador</div>"
+
+			document.getElementById("VALORES_TITULO").innerHTML="<div class=\"styleBusca2\">Valor</div>"
+
+			document.all.tabela.rows[1].cells[2].innerHTML=eval(("\"<div align='center'> <input id='searchValue5' name='valor' type='text'  size='2' maxlength='2'>/ <input id='searchValue5' name='mesNasc' type='text'  size='2' maxlength='2'>/ <input id='searchValue5' name='anoNasc' type='text'  size='4' maxlength='4'></div>\""));
+
+            document.all.tabela.rows[1].cells[1].innerHTML="&nbsp;"
+
+		break;
+
+		case "4.cidade":    //Cidade de estudo
 
 			document.getElementById("operador_0").innerHTML="<div class=\"styleBusca2\">Operador</div>"
 
@@ -39,22 +51,21 @@ function _options(opcao)
 			document.all.tabela.rows[1].cells[2].innerHTML=eval(("\"<div align='center'> <select id='searchValue2' name='valor' size='1'><option value='Curitiba/Paraná'>Curitiba/Paraná</option><option value='Fortaleza/Ceará'>Fortaleza/Ceará</option><option value='Itaboraí/RJ'>Itaboraí/RJ</option><option value='4' selected>Qual cidade?</option></select></div>\"" ));
 
 			document.all.tabela.rows[1].cells[1].innerHTML="&nbsp;"
-
 		break;
-
-		case "4.numfns":  //No do CAT-SUS
+			
+			case "3.diaEntr":  //Data da entrevista
 
 			document.getElementById("operador_0").innerHTML="<div class=\"styleBusca2\">Operador</div>"
 
 			document.getElementById("VALORES_TITULO").innerHTML="<div class=\"styleBusca2\">Valor</div>"
 
-			document.all.tabela.rows[1].cells[2].innerHTML=eval(("\"<div align='center'> <input id='searchValue5' name='valor' type='text'  size='10' maxlength='11'></div>\""));
+			document.all.tabela.rows[1].cells[2].innerHTML=eval(("\"<div align='center'> <input id='searchValue5' name='valor' type='text'  size='2' maxlength='2'>/ <input id='searchValue5' name='mesEntr' type='text'  size='2' maxlength='2'>/ <input id='searchValue5' name='anoEntr' type='text'  size='4' maxlength='4'></div>\""));
 
             document.all.tabela.rows[1].cells[1].innerHTML="&nbsp;"
 
 		break;
 
-		case "5.profsaude":    //psaude
+	/*	case "5.profsaude":    //psaude
 
 			document.getElementById("operador_0").innerHTML="<div class=\"styleBusca2\">Operador</div>"
 
@@ -124,7 +135,7 @@ function _options(opcao)
 
 			document.all.tabela.rows[1].cells[1].innerHTML="&nbsp;"
 
-		break;
+		break;*/
 
 		default:
 
