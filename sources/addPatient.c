@@ -217,7 +217,7 @@ int main (void)
 		{
 			xml_temp = fopen("../xml/pacientesTemp.xml", "w");
 			fgets(temp, 1024, xml);
-			while(strcmp(temp, "</doc>") != 0)
+			while(strstr(temp, "</doc>") == 0)
 			{
 				fputs(temp, xml_temp);
 				fgets(temp, 1024, xml);	
@@ -278,7 +278,7 @@ int main (void)
       		{
         		xml_temp = fopen("../xml/pacientesTemp.xml", "w");
 			fgets(temp, 1024, xml);
-			while(strcmp(temp, "</doc>") != 0)
+			while(strstr(temp, "</doc>") == 0)
 			{
 				fputs(temp, xml_temp);
 				fgets(temp, 1024, xml);

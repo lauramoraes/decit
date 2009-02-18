@@ -735,7 +735,7 @@ else if (document.implementation
 		}
 		
 		//Data da última consulta/VD
-		if (x[linha-1].getElementsByTagName("diaUCons")[0].childNodes.length)
+		if (x[linha-1].getElementsByTagName("diaUCons")[0].childNodes[0].nodeValue != "Não Realizada")
 		{
 			codigo+="</td></tr><tr class='impar'><td>Data da última consulta/VD:</td><td>";
 			codigo+=x[linha-1].getElementsByTagName("diaUCons")[0].childNodes[0].nodeValue + "/" + x[linha-1].getElementsByTagName("mesUCons")[0].childNodes[0].nodeValue + "/" + x[linha-1].getElementsByTagName("anoUCons")[0].childNodes[0].nodeValue;

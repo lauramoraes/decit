@@ -4773,8 +4773,9 @@ printf ("                       <td class=\"fontRight\">  <input type=\"text\" n
 printf ("\n");
 printf ("\n");
 printf ("\n");
-printf ("                                               N&atilde;o realizadoo <input type=\"checkbox\" name=\"ppdmedcheck\" value=\"Não realizado\" onClick=\"if(this.checked){ document.getElementsByName('ppdmed')[0].value='NR'; document.getElementsByName('ppdmed')[0].readOnly=true; diaLeit.disabled=true; mesLeit.disabled=true; anoLeit.disabled=true; leitor.disabled=true; changeColor(diaLeit); changeColor(mesLeit); changeColor(anoLeit); changeColor(leitor);  } else { document.getElementsByName('ppdmed')[0].value=''; document.getElementsByName('ppdmed')[0].readOnly = false; diaLeit.disabled=false; mesLeit.disabled=false; anoLeit.disabled=false; leitor.disabled=false; changeColor(diaLeit); changeColor(mesLeit); changeColor(anoLeit); changeColor(leitor);}\"><br>\n");
-printf ("                                               Em andamento <input type=\"checkbox\" name=\"ppdmedcheck\" value=\"Em andamento\" onClick=\"if(this.checked){ document.getElementsByName('ppdmed')[0].value='NR'; document.getElementsByName('ppdmed')[0].readOnly=true; diaLeit.disabled=true; mesLeit.disabled=true; anoLeit.disabled=true; leitor.disabled=true; changeColor(diaLeit); changeColor(mesLeit); changeColor(anoLeit); changeColor(leitor);  } else { document.getElementsByName('ppdmed')[0].value=''; document.getElementsByName('ppdmed')[0].readOnly = false; diaLeit.disabled=false; mesLeit.disabled=false; anoLeit.disabled=false; leitor.disabled=false; changeColor(diaLeit); changeColor(mesLeit); changeColor(anoLeit); changeColor(leitor);}\"><br>\n");
+printf ("                                               Realizado <input type=\"radio\" name=\"ppdmedcheck\" value=\"Realizado\" onClick=\"document.getElementsByName('ppdmed')[0].value=''; document.getElementsByName('ppdmed')[0].readOnly=false; diaLeit.disabled=false; mesLeit.disabled=false; anoLeit.disabled=false; leitor.disabled=false; changeColor(diaLeit); changeColor(mesLeit); changeColor(anoLeit); changeColor(leitor);\" checked><br>\n");
+printf ("                                               N&atilde;o realizado <input type=\"radio\" name=\"ppdmedcheck\" value=\"Não realizado\" onClick=\"document.getElementsByName('ppdmed')[0].value='NR'; document.getElementsByName('ppdmed')[0].readOnly=true; diaLeit.disabled=true; mesLeit.disabled=true; anoLeit.disabled=true; leitor.disabled=true; changeColor(diaLeit); changeColor(mesLeit); changeColor(anoLeit); changeColor(leitor);\"><br>\n");
+printf ("                                               Em andamento <input type=\"radio\" name=\"ppdmedcheck\" value=\"Em andamento\" onClick=\"document.getElementsByName('ppdmed')[0].value='NR'; document.getElementsByName('ppdmed')[0].readOnly=true; diaLeit.disabled=true; mesLeit.disabled=true; anoLeit.disabled=true; leitor.disabled=true; changeColor(diaLeit); changeColor(mesLeit); changeColor(anoLeit); changeColor(leitor);\"><br>\n");
 printf ("\n");
 printf ("\n");
 printf ("\n");
@@ -5220,7 +5221,7 @@ printf ("                       <td align=left> Outro exame (1) &nbsp;&nbsp;&nbs
 printf ("\n");
 printf ("\n");
 printf ("\n");
-printf ("                                       <input type=\"text\" name=\"exame1\" size=20 maxlength=20>\n");
+printf ("                                       <input type=\"text\" name=\"exame1\" size=20 maxlength=20 disabled>\n");
 printf ("\n");
 printf ("\n");
 printf ("\n");
@@ -5240,7 +5241,7 @@ printf ("                                              Em andamento <input type=
 printf ("\n");
 printf ("\n");
 printf ("\n");
-printf ("                                              Não realizado <input type=\"radio\" name=\"outtbk1\" value=\"Não realizado\" onClick=\"exame1.disabled=true; changeColor(exame1);\">\n");
+printf ("                                              Não realizado <input type=\"radio\" name=\"outtbk1\" value=\"Não realizado\" onClick=\"exame1.disabled=true; changeColor(exame1);\" checked>\n");
 printf ("\n");
 printf ("\n");
 printf ("\n");
@@ -5264,7 +5265,7 @@ printf ("                       <td align=left> Outro exame (2) &nbsp;&nbsp;&nbs
 printf ("\n");
 printf ("\n");
 printf ("\n");
-printf ("                                       <input type=\"text\" name=\"exame2\" size=20 maxlength=20>\n");
+printf ("                                       <input type=\"text\" name=\"exame2\" size=20 maxlength=20 disabled>\n");
 printf ("\n");
 printf ("\n");
 printf ("\n");
@@ -5284,7 +5285,7 @@ printf ("                                              Em andamento <input type=
 printf ("\n");
 printf ("\n");
 printf ("\n");
-printf ("                                              Não realizado <input type=\"radio\" name=\"outtbk2\" value=\"Não realizado\" onClick=\"exame2.disabled=true; changeColor(exame2);\">\n");
+printf ("                                              Não realizado <input type=\"radio\" name=\"outtbk2\" value=\"Não realizado\" onClick=\"exame2.disabled=true; changeColor(exame2);\" checked>\n");
 printf ("\n");
 printf ("\n");
 printf ("\n");
@@ -5308,7 +5309,7 @@ printf ("                       <td align=left> Outro exame (3) &nbsp;&nbsp;&nbs
 printf ("\n");
 printf ("\n");
 printf ("\n");
-printf ("                                       <input type=\"text\" name=\"exame3\" size=20 maxlength=20>\n");
+printf ("                                       <input type=\"text\" name=\"exame3\" size=20 maxlength=20 disabled>\n");
 printf ("\n");
 printf ("\n");
 printf ("\n");
@@ -5328,7 +5329,7 @@ printf ("                                              Em andamento <input type=
 printf ("\n");
 printf ("\n");
 printf ("\n");
-printf ("                                              Não realizado <input type=\"radio\" name=\"outtbk3\" value=\"Não realizado\" onClick=\"exame3.disabled=true; changeColor(exame3);\">\n");
+printf ("                                              Não realizado <input type=\"radio\" name=\"outtbk3\" value=\"Não realizado\" onClick=\"exame3.disabled=true; changeColor(exame3);\" checked>\n");
 printf ("\n");
 printf ("\n");
 printf ("\n");
@@ -5352,7 +5353,7 @@ printf ("                       <td align=left> Outro exame (4) &nbsp;&nbsp;&nbs
 printf ("\n");
 printf ("\n");
 printf ("\n");
-printf ("                                       <input type=\"text\" name=\"exame4\" size=20 maxlength=20>\n");
+printf ("                                       <input type=\"text\" name=\"exame4\" size=20 maxlength=20 disabled>\n");
 printf ("\n");
 printf ("\n");
 printf ("\n");
@@ -5372,7 +5373,7 @@ printf ("                                              Em andamento <input type=
 printf ("\n");
 printf ("\n");
 printf ("\n");
-printf ("                                              Não realizado <input type=\"radio\" name=\"outtbk4\" value=\"Não realizado\" onClick=\"exame4.disabled=true; changeColor(exame4);\">\n");
+printf ("                                              Não realizado <input type=\"radio\" name=\"outtbk4\" value=\"Não realizado\" onClick=\"exame4.disabled=true; changeColor(exame4);\" checked>\n");
 printf ("\n");
 printf ("\n");
 printf ("\n");
@@ -5665,7 +5666,7 @@ printf ("                                             <input type=\"text\" name=
 printf ("\n");
 printf ("\n");
 printf ("\n");
-printf ("                                             Não Realizada <input type=\"checkbox\" name=\"diaUCons\" value=\"Não Realizada\" onClick=\"if(this.checked) {document.getElementsByName('diaUCons')[0].readOnly = true; document.getElementsByName('mesUCons')[0].readOnly = true; mesUCons.disabled=true;document.getElementsByName('anoUCons')[0].readOnly = true; anoUCons.disabled=true;} else{document.getElementsByName('mesUCons')[0].readOnly = false; mesUCons.disabled=false;document.getElementsByName('anoUCons')[0].readOnly = false; anoUCons.disabled=false; document.getElementsByName('diaUCons')[0].readOnly = false;}\"><br>\n");
+printf ("                                             Não Realizada <input type=\"checkbox\" name=\"diaUCons\" value=\"Não Realizada\" onClick=\"if(this.checked) {document.getElementsByName('diaUCons')[0].readOnly = true; diaUCons[0].disabled=true; document.getElementsByName('mesUCons')[0].readOnly = true; mesUCons.disabled=true;document.getElementsByName('anoUCons')[0].readOnly = true; anoUCons.disabled=true;} else{document.getElementsByName('mesUCons')[0].readOnly = false; mesUCons.disabled=false;document.getElementsByName('anoUCons')[0].readOnly = false; anoUCons.disabled=false; document.getElementsByName('diaUCons')[0].readOnly = false; diaUCons[0].disabled=false; }\"><br>\n");
 printf ("\n");
 printf ("\n");
 
