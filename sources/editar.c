@@ -82,7 +82,7 @@ printf ("        <link  rel=\"stylesheet\" type=\"text/css\" href=\"../css/stand
 printf ("\n");
 printf ("\n");
 printf ("\n");
-printf ("        <script language=\"javascript\" src=\"../js/validacoes.js\">//%s\t%s</script>\n",username,paciente);
+printf ("        <script language=\"javascript\" src=\"../js/validacoes.js\"></script>\n");
 printf ("\n");
 printf ("\n");
 printf ("\n");
@@ -94,8 +94,6 @@ printf ("	<link rel=\"stylesheet\" href=\"../css/tooltip.css\" media=\"screen\">
 printf ("\n");
 printf ("\n");
 printf ("\n");
-printf("<!--%s\t%s-->\n",username,paciente);
-
 
 		printf ("	<script>\n");
 		/*** funcao em javascipt que atribui valores aos campos do formulario ***/
@@ -146,10 +144,8 @@ printf("<!--%s\t%s-->\n",username,paciente);
 			else
 				indice1 --;
 		}
-
-printf("//<!--%s\t%s-->\n",username,paciente);
 		
-//		usualFreeMemory(NULL);	
+		//usualFreeMemory(NULL);	
 							/*
 							tabela[0] = [\"campo1\",\"casa\"];\n\
 							tabela[1] = [\"campo2\",\"cachorro\"];\n\
@@ -163,7 +159,7 @@ printf("//<!--%s\t%s-->\n",username,paciente);
 		printf ("		\n");
 		printf ("		for(indice1 = 0 ;indice1 < %i;indice1 ++)\n",indice1);
 		printf ("		{\n");
-		printf ("			for(indice2 = 0;indice2 < %s;indice2 ++)\n", "473");
+		printf ("			for(indice2 = 0;indice2 < %s;indice2 ++)\n", "480");
 		printf ("			{\n");
 		printf ("				if(form.elements[indice2].name == tabela[indice1][0])\n");
 		printf ("				{\n");
@@ -182,7 +178,6 @@ printf("//<!--%s\t%s-->\n",username,paciente);
 /*******************************************************************************************************************************************************************************************/
 		printf ("	</script>\n");
 		printf ("\n");
-printf("<!--%s\t%s-->\n",username,paciente);
 		printf ("</head>\n");
 		
 //printf ("    <body class=\"style1\" onLoad=\"inicializaOcultos(); preencherCampos(form);\">\n");
@@ -216,7 +211,6 @@ printf ("\n");
 printf ("\n");
 printf ("      <form name=\"form\" id =\"form1\" action=\"doEdit.cgi\" method=\"post\" onsubmit=\"return confirmaEnvio();\">\n");
 printf ("\n");
-printf("<!--%s\t%s-->\n",username,paciente); 
 printf("<input type=\"HIDDEN\" name=\"uid\" value=\"%s\">\n",username);
 printf("<input type=\"HIDDEN\" name=\"paciente\" value=\"%s\">\n",paciente);
 printf ("\n");
@@ -1035,9 +1029,9 @@ printf ("                                Bairro: <input type=\"text\" name=\"bai
 printf ("\n");
 printf ("\n");
 printf ("\n");
-printf ("                                CEP: <input type=\"text\" name=\"cep\"  size=\"8\" maxlength=\"8\" onBlur=\"if(this.value != '') {validarCampoNumerico(this,8,0,0)}\">&nbsp;<span style=\"font-size: small\"><i>Exemplo: o CEP 11111-000 --&gt; 11111000</i></span><br>\n");
+printf ("                                CEP: <input type=\"text\" name=\"cep\"  size=\"8\" maxlength=\"8\" onBlur=\"if(this.value != '') {validarCampoNumerico(this,8,0,0)}\">&nbsp; Não sabe informar <input type=\"checkbox\" name=\"cepchk\" value=\"Não sabe informar\" onClick=\"if(this.checked){cep.disabled=true;changeColor(cep);document.getElementById('form1').cep.value='NR';}else{cep.disabled=false;changeColor(cep);}\" </input> <br>\n");
 printf ("\n");
-printf ("								Telefone: <input type=\"radio\" name=\"proprietarioTel\" value=\"Próprio\" onclick=\"ocultaLinha('tabelaCaracterizacao', 4)\">Pr&oacute;prio &nbsp;&nbsp;&nbsp; <input type=\"radio\" name=\"proprietarioTel\" value=\"Contato\" onclick=\"exibeLinhaOculta('tabelaCaracterizacao', 4)\">Contato<br />\n");
+printf ("								Telefone: <input type=\"radio\" name=\"proprietarioTel\" value=\"Próprio\" onclick=\"ddd.disabled=false;changeColor(ddd);telefone.disabled=false;changeColor(telefone);ocultaLinha('tabelaCaracterizacao', 4)\">Pr&oacute;prio &nbsp;&nbsp;&nbsp; <input type=\"radio\" name=\"proprietarioTel\" value=\"Contato\" onclick=\"ddd.disabled=false;changeColor(ddd);telefone.disabled=false;changeColor(telefone);exibeLinhaOculta('tabelaCaracterizacao', 4)\">Contato &nbsp; <input type=\"radio\" name=\"proprietarioTel\" value=\"Não possui\" onClick=\"ddd.disabled=true;changeColor(ddd);telefone.disabled=true;changeColor(telefone);ocultaLinha('tabelaCaracterizacao', 4);\" </input> Não possui<br/>\n");
 printf ("\n");
 printf ("                                Telefone para contato: (&nbsp;<input type=\"text\" name=\"ddd\" size=\"2\" maxlength=\"2\" onBlur=\"if(this.value != '') {validarCampoNumerico(this,2,0,0)}\">&nbsp;)&nbsp;<input type=\"text\" name=\"telefone\"  size=\"8\" maxlength=8 onBlur=\"if(this.value != '') {validarCampoNumerico(this,8,0,0)}\">&nbsp;<span style=\"font-size: small\"><i>N&atilde;o use \"-\"</i></span><br>			\n");
 printf ("\n");
@@ -3081,15 +3075,15 @@ printf ("                       </td>\n");
 printf ("\n");
 printf ("\n");
 printf ("\n");
-printf ("                       <td class=\"fontRight\">Sim <input type=\"radio\" name=\"tbprev\" value=\"Sim\" onclick=\"exibeLinhaOculta('tabelaSintomas',13);exibeLinhaOculta('tabelaSintomas',14);tbdesf.disabled=false;dttbpast.disabled=false;\"><br>\n");
+printf ("                       <td class=\"fontRight\">Sim <input type=\"radio\" name=\"tbprev\" value=\"Sim\" onclick=\"exibeLinhaOculta('tabelaSintomas',13);exibeLinhaOculta('tabelaSintomas',14);exibeLinhaOculta('tabelaSintomas',15);tbdesf.disabled=false;dttbpast.disabled=false;ressinan.disabled=false;\"><br>\n");
 printf ("\n");
 printf ("\n");
 printf ("\n");
-printf ("                                             Não <input type=\"radio\" name=\"tbprev\" value=\"Não\" onclick=\"ocultaLinha('tabelaSintomas',13);ocultaLinha('tabelaSintomas',14);tbdesf.disabled=true;dttbpast.disabled=true;\"><br>\n");
+printf ("                                             Não <input type=\"radio\" name=\"tbprev\" value=\"Não\" onclick=\"ocultaLinha('tabelaSintomas',13);ocultaLinha('tabelaSintomas',14);ocultaLinha('tabelaSintomas',15);tbdesf.disabled=true;dttbpast.disabled=true;ressinan.disabled=true;\"><br>\n");
 printf ("\n");
 printf ("\n");
 printf ("\n");
-printf ("                                             Não sabe informar <input type=\"radio\" name=\"tbprev\" value=\"Não sabe informar\" onclick=\"ocultaLinha('tabelaSintomas',13);ocultaLinha('tabelaSintomas',14);tbdesf.disabled=true;dttbpast.disabled=true;\">\n");
+printf ("                                             Não sabe informar <input type=\"radio\" name=\"tbprev\" value=\"Não sabe informar\" onclick=\"ocultaLinha('tabelaSintomas',13);ocultaLinha('tabelaSintomas',14);ocultaLinha('tabelaSintomas',15);tbdesf.disabled=true;dttbpast.disabled=true;ressinan.disabled=true;\">\n");
 printf ("\n");
 printf ("\n");
 printf ("\n");
@@ -4275,7 +4269,7 @@ printf ("\n");
 printf ("\n");
 printf ("                       <td class=\"fontRight\">\n");
 printf ("\n");
-printf ("									   Porcentagem: <input type=\"text\" name=\"probpercent\" size=3 maxlength=3 onBlur=\"if(this.value != '') {validarCampoNumerico(this,3,0,100)}\">%%<br>\n");
+printf ("									   Porcentagem: <input type=\"text\" name=\"probpercent\" size=3 maxlength=3 onBlur=\"if(this.value != '') {validarCampoNumerico(this,0,0,100)}\">%%<br>\n");
 printf ("									   \n");
 printf ("\n");
 printf ("                                       Alta <input type=\"radio\" name=\"probclin\" value=\"Alta\"><br>\n");
@@ -4627,6 +4621,7 @@ printf ("\n");
 printf ("\n");
 printf ("\n");
 printf ("                                              Não Realizada <input type=\"radio\" name=\"rxtor\" value=\"Não Realizada\" onclick=\"diaExame.disabled=true; anoExame.disabled=true; mesExame.disabled=true; area[0].disabled=true; area[1].disabled=true; area[2].disabled=true; changeColor(diaExame); changeColor(mesExame); changeColor(anoExame);\">\n");
+printf ("                                              Em andamento <input type=\"radio\" name=\"rxtor\" value=\"Em andamento\" onclick=\"diaExame.disabled=true; anoExame.disabled=true; mesExame.disabled=true; area[0].disabled=true; area[1].disabled=true; area[2].disabled=true; changeColor(diaExame); changeColor(mesExame); changeColor(anoExame);\">\n");
 printf ("\n");
 printf ("\n");
 printf ("\n");
@@ -4867,6 +4862,7 @@ printf ("\n");
 printf ("\n");
 printf ("\n");
 printf ("                                               N&atilde;o realizado <input type=\"checkbox\" name=\"ppdmedcheck\" value=\"Não realizado\" onClick=\"if(this.checked){ document.getElementsByName('ppdmed')[0].value='NR'; document.getElementsByName('ppdmed')[0].readOnly=true; diaLeit.disabled=true; mesLeit.disabled=true; anoLeit.disabled=true; leitor.disabled=true; changeColor(diaLeit); changeColor(mesLeit); changeColor(anoLeit); changeColor(leitor);  } else { document.getElementsByName('ppdmed')[0].value=''; document.getElementsByName('ppdmed')[0].readOnly = false; diaLeit.disabled=false; mesLeit.disabled=false; anoLeit.disabled=false; leitor.disabled=false; changeColor(diaLeit); changeColor(mesLeit); changeColor(anoLeit); changeColor(leitor);}\"><br>\n");
+printf ("                                               Em andamento <input type=\"checkbox\" name=\"ppdmedcheck\" value=\"Em andamento\" onClick=\"if(this.checked){ document.getElementsByName('ppdmed')[0].value='NR'; document.getElementsByName('ppdmed')[0].readOnly=true; diaLeit.disabled=true; mesLeit.disabled=true; anoLeit.disabled=true; leitor.disabled=true; changeColor(diaLeit); changeColor(mesLeit); changeColor(anoLeit); changeColor(leitor);  } else { document.getElementsByName('ppdmed')[0].value=''; document.getElementsByName('ppdmed')[0].readOnly = false; diaLeit.disabled=false; mesLeit.disabled=false; anoLeit.disabled=false; leitor.disabled=false; changeColor(diaLeit); changeColor(mesLeit); changeColor(anoLeit); changeColor(leitor);}\"><br>\n");
 printf ("\n");
 printf ("\n");
 printf ("\n");
@@ -4948,9 +4944,9 @@ printf ("\n");
 printf ("\n");
 printf ("                                               Negativo <input type=\"radio\" name=\"znescar1\" value=\"Negativo\" onclick=\"ocultaLinha('tabelaComplementar',13);znesint1.disabled=true;  horaColeta1.disabled=false; minutoColeta1.disabled=false; changeColor(horaColeta1); changeColor(minutoColeta1);\"><br>\n");
 printf ("\n");
+printf ("                                               Em andamento <input type=\"radio\" name=\"znescar1\" value=\"Em andamento\" onclick=\"ocultaLinha('tabelaComplementar',13);znesint1.disabled=true; horaColeta1.disabled=true; minutoColeta1.disabled=true; changeColor(horaColeta1); changeColor(minutoColeta1);\"><br>\n");
 printf ("\n");
-printf ("\n");
-printf ("                                               N&atilde;o realizado/Ignorado <input type=\"radio\" name=\"znescar1\" value=\"Ignorado\" onclick=\"ocultaLinha('tabelaComplementar',13);znesint1.disabled=true; horaColeta1.disabled=true; minutoColeta1.disabled=true; changeColor(horaColeta1); changeColor(minutoColeta1);\">\n");
+printf ("                                               N&atilde;o realizado/Ignorado <input type=\"radio\" name=\"znescar1\" value=\"Ignorado/Não Realizado\" onclick=\"ocultaLinha('tabelaComplementar',13);znesint1.disabled=true; horaColeta1.disabled=true; minutoColeta1.disabled=true; changeColor(horaColeta1); changeColor(minutoColeta1);\">\n");
 printf ("\n");
 printf ("\n");
 printf ("\n");
@@ -5093,8 +5089,9 @@ printf ("\n");
 printf ("                                               Negativo <input type=\"radio\" name=\"znescar2\" value=\"Negativo\" onclick=\"ocultaLinha('tabelaComplementar',17);znesint2.disabled=true;  horaColeta2.disabled=false; minutoColeta2.disabled=false; changeColor(horaColeta2); changeColor(minutoColeta2);\"><br>\n");
 printf ("\n");
 printf ("\n");
+printf ("                                               Em andamento <input type=\"radio\" name=\"znescar2\" value=\"Em andamento\" onclick=\"ocultaLinha('tabelaComplementar',17);znesint2.disabled=true;  horaColeta2.disabled=true; minutoColeta2.disabled=true; changeColor(horaColeta2); changeColor(minutoColeta2);\"><br>\n");
 printf ("\n");
-printf ("                                               Ignorado <input type=\"radio\" name=\"znescar2\" value=\"Ignorado\" onclick=\"ocultaLinha('tabelaComplementar',17);znesint2.disabled=true;  horaColeta2.disabled=true; minutoColeta2.disabled=true; changeColor(horaColeta2); changeColor(minutoColeta2);\">\n");
+printf ("                                               Não realizado/Ignorado <input type=\"radio\" name=\"znescar2\" value=\"Não realizado/Ignorado\" onclick=\"ocultaLinha('tabelaComplementar',17);znesint2.disabled=true;  horaColeta2.disabled=true; minutoColeta2.disabled=true; changeColor(horaColeta2); changeColor(minutoColeta2);\">\n");
 printf ("\n");
 printf ("\n");
 printf ("\n");
@@ -5504,7 +5501,8 @@ printf ("                       <td colspan=3 class=\"header style3\">\n");
 printf ("\n");
 printf ("\n");
 printf ("\n");
-printf ("                           <div align=left>4.	Acompanhamento </div>\n");
+//printf ("                           <div align=left>4.	Acompanhamento </div>\n");
+printf ("                           <div align=left>4.	Acompanhamentoo  <input type=\"checkbox\" name=\"acompanhamento\" onClick=\"if(this.checked){showHideAcompanhamento(this);} else {hideAcompanhamento();}\"></div>\n");
 printf ("\n");
 printf ("\n");
 printf ("\n");

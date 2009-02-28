@@ -39,7 +39,7 @@ void usualFreeMemory (xmlDocPtr doc)
 	xmlMemoryDump();
 }
 
-void printSuccess (char *username, int atual)
+void printSuccess (char *username)
 {
 	cgi_init_headers();
 	
@@ -48,7 +48,6 @@ void printSuccess (char *username, int atual)
 	printf ("\t\t<title>Usu&aacute;rio Editado</title>\n");
 	printf ("\t\t<meta http-equiv=\"refresh\" content=\"2; URL=busca.cgi?uid=%s\" />\n",username);
 	printf ("\t</head>\n");
-	printf("<!--%i-->\n",atual);
 	printf ("\t<body>\n");
 	printf ("<span style=\"background-color:green; color: white; font-family: Verdana, Arial; font-size:15pt; padding: 5px\">");
 	printf ("Usu&aacute;rio editado com sucesso. Aguarde...</span>");
@@ -60,16 +59,7 @@ void printError (char *msg)
 {
 	cgi_init_headers();
 	
-	printf ("<html><head><title>Erro</title></head><body>");
-}
-print (char*msg)
-{
-printf("%s\n",msg);
-}
-
-printFinal()
-{
-printf("</body></html>");
+	printf ("<html><head><title>Erro</title></head><body><h2>%s</h2></body></html>", msg);
 }
 
 int main (void)
@@ -129,88 +119,88 @@ int main (void)
  ******************************************************************************/
 		
 	atual = 1;
-        printError("oi");
-
+	
 		while((cur_node != NULL) && (atual < paciente_id ))
 		{
 				cur_node = cur_node->next;
 				atual ++;
-                                print(cur_node->children->content);
-			}
-printFinal();
- //                       printError(cur_node->children->next->name);
-	//		printError(cur_node->children->next->content);		
-			old_patient = cur_node;
-			
-	/******************************************************************************
-	 *            CHECK IF PATIENT WAS FOUND		*
-	 *            IF TRUE, EXIT 					*
-	 ******************************************************************************/
-		
-		
-	/******************************************************************************
-	 *            CRIANDO NOVO FORMULARIO DE TRIAGEM                                        *
-	 ******************************************************************************/
-		
-		edited_patient = xmlNewNode (NULL,BAD_CAST "paciente");
-		
-		//printError(edited_patient->name);
-			//usualFreeMemory(NULL);
-			//exit(0);
-	/******************************************************************************
-	 *            ADD NEW FORM                                                    *
-	 ******************************************************************************/
-		
-		//strUTF = formName;
-		new_form = edited_patient;
-		//new_form = xmlNewChild (edited_patient, NULL, BAD_CAST strUTF, NULL);
-		//free(strUTF);//frees formName
-		//cgi_init_headers();
-		//printf ("<html>\n");
-		//printf ("\t<body>\n");
-		
-		for (input = first_input; input; input = input->next)
-		{
-			if (!strcmp(input->name,"form"))
-				input = input->next;
-			
-			
-			/* Validate tag name input against UTF-8 */
-			strUTF = input->name;
-			//printf("%s = ", strUTF);
-			new_node = xmlNewNode (NULL, strUTF);
-			free(strUTF);//frees input->name
-			
-			
-			/* Validate tag value input against UTF-8 */
-			strUTF = input->value;
-			//printf("%s \n", strUTF);
-			xmlNodeAddContent (new_node, strUTF);
-			free(strUTF);//frees input->value
-			
-			
-			xmlAddChild (new_form, new_node);
 		}
-
-		//printf ("</html>\n");
-		//printf ("\t</body>\n");
-		//usualFreeMemory(NULL);
-		//exit(0);
-	/******************************************************************************
-	*	Substituindo o noh antigo pelo novo		*
-	******************************************************************************/
-
-		xmlReplaceNode (old_patient, edited_patient->children);
-		xmlFreeNode (old_patient);
 		
-	/******************************************************************************
-	 *            DUMPING DOCUMENT TO FILE		*
-	 ******************************************************************************/
+		old_patient = cur_node;
+
 		
-		if ((xmlSaveFormatFileEnc(XML_TEMP_FILE, doc, "UTF-8", 1)) < 0)
-		{
-			remove(XML_TEMP_FILE);
-			printError("Erro ao salvar arquivo");
+/******************************************************************************
+ *            CHECK IF PATIENT WAS FOUND		*
+ *            IF TRUE, EXIT 					*
+ ******************************************************************************/
+	
+	
+/******************************************************************************
+ *            CRIANDO NOVO FORMULARIO DE TRIAGEM                                        *
+ ******************************************************************************/
+	
+	edited_patient = xmlNewNode (NULL,BAD_CAST "paciente");
+	
+/******************************************************************************
+ *            ADD NEW FORM                                                    *
+ ******************************************************************************/
+	
+	new_form = edited_patient;
+
+	for (input = first_input; input; input = input->next)
+	{
+		if (!strcmp(input->name,"form"))
+			input = input->next;
+			
+		if (!strcmp(input->name,"uid"))
+			input = input->next;
+			
+		if (!strcmp(input->name,"paciente"))
+			input = input->next;
+		
+		
+		/* Validate tag name input against UTF-8 */
+		strUTF = input->name;
+		//printf("%s : \n", strUTF);
+		new_node = xmlNewNode (NULL, strUTF);
+		free(strUTF);//frees input->name
+		
+		
+		/* Validate tag value input against UTF-8 */
+		strUTF = input->value;
+		//printf("%s <br>\n", strUTF);
+		xmlNodeAddContent (new_node, strUTF);
+		free(strUTF);//frees input->value
+		
+		
+		xmlAddChild (new_form, new_node);
+	}
+
+	/*printf ("</span>");
+		printf ("\t</body>\n");
+	printf ("</html>");
+	
+	return 0;*/
+	
+	//printf ("</html>\n");
+	//printf ("\t</body>\n");
+	//usualFreeMemory(NULL);
+	//exit(0);
+/******************************************************************************
+*	Substituindo o noh antigo pelo novo		*
+******************************************************************************/
+
+	xmlReplaceNode (old_patient, edited_patient);
+	xmlFreeNode (old_patient);
+	
+/******************************************************************************
+ *            DUMPING DOCUMENT TO FILE		*
+ ******************************************************************************/
+	
+	if ((xmlSaveFormatFileEnc(XML_TEMP_FILE, doc, "UTF-8", 1)) < 0)
+	{
+		remove(XML_TEMP_FILE);
+		printError("Erro ao salvar arquivo");
 		usualFreeMemory(doc);
 		exit(0);
 	}
@@ -228,7 +218,7 @@ printFinal();
  *            FREE MEMORY AND EXIT			*
  ******************************************************************************/
 
-//	printSuccess(username,atual);
+	printSuccess(username);
 	
 	usualFreeMemory(doc);
 	
