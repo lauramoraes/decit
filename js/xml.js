@@ -621,7 +621,7 @@ else if (document.implementation
 		//Baciloscopia (1ª amostra)
 		codigo+="</td></tr><tr class='impar'><td>Baciloscopia (1ª amostra):</td><td>";
 		codigo+=x[linha-1].getElementsByTagName("znescar1")[0].childNodes[0].nodeValue;
-		if ((cidade == "Curitiba/Paraná") && (x[linha-1].getElementsByTagName("znescar1")[0].childNodes[0].nodeValue != "Não realizado") && (x[linha-1].getElementsByTagName("znescar1")[0].childNodes[0].nodeValue != "Em andamento"))
+		if ((cidade == "Curitiba/Paraná") && ((x[linha-1].getElementsByTagName("znescar1")[0].childNodes[0].nodeValue != "Ignorado/Não Realizado") && (x[linha-1].getElementsByTagName("znescar1")[0].childNodes[0].nodeValue != "Em andamento")) && (x[linha-1].getElementsByTagName("znescar1")))
 		{
 			codigo+=" mm de enduração" + "</td></tr><tr class='impar'><td>&nbsp;&nbsp;&nbsp;&nbsp; - Data da leitura:</td><td>";
 			codigo+=x[linha-1].getElementsByTagName("horaColeta1")[0].childNodes[0].nodeValue + ":" + x[linha-1].getElementsByTagName("minutoColeta1")[0].childNodes[0].nodeValue;
@@ -639,7 +639,7 @@ else if (document.implementation
 		//Baciloscopia (2ª amostra)
 		codigo+="</td></tr><tr class='impar'><td>Baciloscopia (2ª amostra):</td><td>";
 		codigo+=x[linha-1].getElementsByTagName("znescar2")[0].childNodes[0].nodeValue;
-		if ((cidade == "Curitiba/Paraná") && (x[linha-1].getElementsByTagName("znescar2")[0].childNodes[0].nodeValue != "Não realizado") && (x[linha-1].getElementsByTagName("znescar2")[0].childNodes[0].nodeValue != "Em andamento"))
+		if ((cidade == "Curitiba/Paraná") && (x[linha-1].getElementsByTagName("znescar2")[0].childNodes[0].nodeValue != "Não realizado/Ignorado") && (x[linha-1].getElementsByTagName("znescar2")[0].childNodes[0].nodeValue != "Em andamento"))
 		{
 			codigo+=" mm de enduração" + "</td></tr><tr class='impar'><td>&nbsp;&nbsp;&nbsp;&nbsp; - Data da leitura:</td><td>";
 			codigo+=x[linha-1].getElementsByTagName("horaColeta2")[0].childNodes[0].nodeValue + ":" + x[linha-1].getElementsByTagName("minutoColeta2")[0].childNodes[0].nodeValue;
