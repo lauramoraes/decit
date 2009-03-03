@@ -121,7 +121,7 @@ printf ("</div>\n");
 printf ("\n");
 printf ("\n");
 printf ("\n");
-printf ("      <form name=\"form\" id =\"form1\" action=\"newAddPatient.cgi?uid=%s\" method=\"post\" onsubmit=\"return confirmaEnvio();\">\n", username);
+printf ("      <form name=\"form\" id =\"form1\" action=\"AddPatient.cgi?uid=%s\" method=\"post\" onsubmit=\"return confirmaEnvio();\">\n", username);
 printf ("\n");
 printf("<input type=\"HIDDEN\" name=\"uid\" value=\"%s\">\n",username);
 printf ("\n");
