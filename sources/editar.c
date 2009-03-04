@@ -5750,7 +5750,7 @@ printf ("                                             <input type=\"text\" name=
 printf ("\n");
 printf ("\n");
 printf ("\n");
-printf ("                                             Não Realizada <input type=\"checkbox\" name=\"diaUCons\" value=\"Não Realizada\" onClick=\"if (this.checked) { document.getElementsByName('diaUCons')[0].readOnly = true; diaUCons[0].disabled=true; document.getElementsByName('mesUCons')[0].readOnly = true; mesUCons.disabled=true; document.getElementsByName('anoUCons')[0].readOnly = true; anoUCons.disabled=true; } else { document.getElementsByName('mesUCons')[0].readOnly = false; mesUCons.disabled=false; document.getElementsByName('anoUCons')[0].readOnly = false; anoUCons.disabled=false; document.getElementsByName('diaUCons')[0].readOnly = false; diaUCons[0].disabled=false; }\"><br>\n");
+printf ("                                             Não Realizada <input type=\"checkbox\" name=\"uConsCheck\" value=\"Não Realizada\" onClick=\"if (this.checked) { document.getElementsByName('diaUCons')[0].readOnly = true; diaUCons.disabled=true; document.getElementsByName('mesUCons')[0].readOnly = true; mesUCons.disabled=true; document.getElementsByName('anoUCons')[0].readOnly = true; anoUCons.disabled=true; } else { document.getElementsByName('mesUCons')[0].readOnly = false; mesUCons.disabled=false; document.getElementsByName('anoUCons')[0].readOnly = false; anoUCons.disabled=false; document.getElementsByName('diaUCons')[0].readOnly = false; diaUCons.disabled=false;}\"><br>\n");
 printf ("\n");
 printf ("\n");
 printf ("\n");
