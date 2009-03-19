@@ -4516,7 +4516,7 @@ printf ("                       </td>\n");
 printf ("\n");
 printf ("\n");
 printf ("\n");
-printf ("                       <td class=\"fontRight\"> Normal  <input type=\"radio\" name=\"rxtor\" value=\"Normal\"><br>\n");
+printf ("                       <td class=\"fontRight\"> Normal  <input type=\"radio\" name=\"rxtor\" value=\"Normal\" onclick=\"diaExame.disabled=false; anoExame.disabled=false; mesExame.disabled=false; area[0].disabled=true; area[1].disabled=true; area[2].disabled=true; changeColor(diaExame); changeColor(mesExame); changeColor(anoExame);\"><br>\n");
 printf ("\n");
 printf ("\n");
 printf ("\n");
