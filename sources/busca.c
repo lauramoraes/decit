@@ -276,18 +276,18 @@ printf("\n");
 printf("\n");
 printf("		document.write(\"<td width='50' align='center'>\" +  linha + \".</td>\");\n");
 printf("\n");
-printf("		document.write(\"<td class='link' onClick='showXSL(\" + linha + \",\" + fname + \")'>\");\n");
+printf("		document.write(\"<td class='link' onClick='showXSL(\" + x[i].getElementsByTagName(\"id\")[0].childNodes[0].nodeValue + \",\" + fname + \")'>\");\n");
 printf("\n");
 printf("		document.write(x[i].getElementsByTagName(\"nome\")[0].childNodes[0].nodeValue);\n");
 printf("\n");
 printf("		document.write(\"</td>\");\n");
-printf("		document.write(\"<td class='link' align='center' onClick='showXSL(\" + linha + \",\" + fname + \")'>\");\n");
+printf("		document.write(\"<td class='link' align='center' onClick='showXSL(\" + x[i].getElementsByTagName(\"id\")[0].childNodes[0].nodeValue + \",\" + fname + \")'>\");\n");
 printf("\n");
 printf("		document.write(x[i].getElementsByTagName(\"diaNasc\")[0].childNodes[0].nodeValue + \"/\" + x[i].getElementsByTagName(\"mesNasc\")[0].childNodes[0].nodeValue + \"/\" + x[i].getElementsByTagName(\"anoNasc\")[0].childNodes[0].nodeValue);\n");
 printf("\n");
 printf("		document.write(\"</td>\");\n");
 printf("\n");
-printf("		document.write(\"<td class='link' align='center' onClick='showXSL(\" + linha + \",\" + fname + \")'>\");\n");
+printf("		document.write(\"<td class='link' align='center' onClick='showXSL(\" + x[i].getElementsByTagName(\"id\")[0].childNodes[0].nodeValue + \",\" + fname + \")'>\");\n");
 printf("\n");
 printf("		document.write(x[i].getElementsByTagName(\"diaEntr\")[0].childNodes[0].nodeValue + \"/\" + x[i].getElementsByTagName(\"mesEntr\")[0].childNodes[0].nodeValue + \"/\" + x[i].getElementsByTagName(\"anoEntr\")[0].childNodes[0].nodeValue);\n");
 printf("\n");
@@ -295,14 +295,16 @@ printf("		document.write(\"</td>\");\n");
 printf("\n");
 printf("		document.write(\"<td class='link'  align='center'>\");\n");
 		
-printf("		var endereco = \"remover.cgi?paciente=\" + (i+1) + \"&uid=%s>\"\n",username);
+//printf("		var endereco = \"remover.cgi?paciente=\" + (i+1) + \"&uid=%s>\"\n",username);
+printf("		var endereco = \"remover.cgi?paciente=\" + x[i].getElementsByTagName(\"id\")[0].childNodes[0].nodeValue + \"&uid=%s>\"\n",username);
 		
 printf("		document.write(\"<a href=\" + endereco + \"Remover\" + \"</a>\");\n");
 printf("		document.write(\"</td>\");\n");	
 
 printf("		document.write(\"<td class='link'  align='center'>\");\n");
 		
-printf("		endereco = \"editar.cgi?paciente=\" + (i+1) + \"&uid=%s>\"\n",username);
+//printf("		endereco = \"editar.cgi?paciente=\" + (i+1) + \"&uid=%s>\"\n",username);
+printf("		endereco = \"editar.cgi?paciente=\" + x[i].getElementsByTagName(\"id\")[0].childNodes[0].nodeValue + \"&uid=%s>\"\n",username);
 		
 printf("		document.write(\"<a href=\" + endereco + \"Editar\" + \"</a>\");\n");
 printf("		document.write(\"</td>\");\n");

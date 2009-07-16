@@ -4196,7 +4196,7 @@ printf ("                                       Baixa <input type=\"radio\" name
 printf ("\n");
 printf ("\n");
 printf ("\n");
-printf ("                                       Ignorado <input type=\"radio\" name=\"probclin\" value=\"Ignorado\" onClick=\"if(this.checked){ document.getElementsByName('probpercent')[0].readOnly=true; }\"><br>\n");
+printf ("                                       Ignorado <input type=\"radio\" name=\"probclin\" value=\"Ignorado\" onClick=\"if(this.checked){ document.getElementsByName('probpercent')[0].readOnly=true; probpercent.disabled=true; }\"><br>\n");
 printf ("\n");
 printf ("							\n");
 printf ("\n");
@@ -4516,7 +4516,7 @@ printf ("                       </td>\n");
 printf ("\n");
 printf ("\n");
 printf ("\n");
-printf ("                       <td class=\"fontRight\"> Normal  <input type=\"radio\" name=\"rxtor\" value=\"Normal\" onclick=\"diaExame.disabled=false; anoExame.disabled=false; mesExame.disabled=false; area[0].disabled=true; area[1].disabled=true; area[2].disabled=true; changeColor(diaExame); changeColor(mesExame); changeColor(anoExame);\"><br>\n");
+printf ("                       <td class=\"fontRight\"> Normal  <input type=\"radio\" name=\"rxtor\" value=\"Normal\"><br>\n");
 printf ("\n");
 printf ("\n");
 printf ("\n");

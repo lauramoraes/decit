@@ -118,12 +118,14 @@ int main (void)
  *            SEARCH THE SAME <numeroGeral>                                   *
  ******************************************************************************/
 		
-	atual = 1;
+	//atual = 1;
+	atual = cur_node->getElementsByTagName("id");
 	
-		while((cur_node != NULL) && (atual < paciente_id ))
+		while((cur_node != NULL) && (atual->value != paciente_id ))
 		{
 				cur_node = cur_node->next;
-				atual ++;
+				//atual ++;
+				atual = cur_node->getElementsByTagName("id");
 		}
 		
 		old_patient = cur_node;
